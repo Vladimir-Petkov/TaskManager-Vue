@@ -1,54 +1,60 @@
 <template>
-  <div class="tasks container">
-    <div class="container">
+  <div>
+    <template>
       <a class="button" href="/create">Create New Task</a>
+    </template>
+    <div class="tasks container">
+      <header>
+        <div class="column header open">Open</div>
+        <div class="column header inProgress">In progress</div>
+        <div class="column header finished">Finished</div>
+        <div class="column header deploy">Deploy</div>
+      </header>
+      <ul class="column open">
+        <!-- {{}} -->
+        <li>
+          <v-card>
+            <v-list-item-content>
+              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
+              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+            </v-list-item-content>
+            <v-card-actions>
+              <v-btn small>Button</v-btn>
+              <v-btn small>Button</v-btn>
+            </v-card-actions>
+          </v-card>
+        </li>
+        <li>
+          {{'Test'}}
+          <a class="icon edit" href="/edit/{{}}"></a>
+          <a class="icon delete" href="/delete/{{}}"></a>
+        </li>
+      </ul>
+      <ul class="column inProgress">
+        <!-- {{}} -->
+        <li>
+          {{'Gosho'}}
+          <a class="icon edit" href="/edit/{{}}"></a>
+          <a class="icon delete" href="/delete/{{}}"></a>
+        </li>
+      </ul>
+      <ul class="column finished">
+        <!-- {{}} -->
+        <li>
+          {{'Gosho'}}
+          <a class="icon edit" href="/edit/{{}}"></a>
+          <a class="icon delete" href="/delete/{{}}"></a>
+        </li>
+      </ul>
+      <ul class="column deploy">
+        <!-- {{}} -->
+        <li>
+          {{'Gosho'}}
+          <a class="icon edit" href="/edit/{{}}"></a>
+          <a class="icon delete" href="/delete/{{}}"></a>
+        </li>
+      </ul>
     </div>
-    <header>
-      <div class="column header open">Open</div>
-      <div class="column header inProgress">In progress</div>
-      <div class="column header finished">Finished</div>
-      <div class="column header deploy">Deploy</div>
-    </header>
-    <ul class="column open">
-      <!-- {{}} -->
-      <!-- <th>
-        <li>
-          {{title}}
-          <a class="icon edit" href="/edit/{{}}"></a>
-          <a class="icon delete" href="/delete/{{}}"></a>
-        </li>
-      </th> -->
-    </ul>
-    <ul class="column inProgress">
-      <!-- {{}} -->
-      <th>
-        <li>
-          <!-- {{}} -->
-          <a class="icon edit" href="/edit/{{}}"></a>
-          <a class="icon delete" href="/delete/{{}}"></a>
-        </li>
-      </th>
-    </ul>
-    <ul class="column finished">
-      <!-- {{}} -->
-      <th>
-        <li>
-          <!-- {{title}} -->
-          <a class="icon edit" href="/edit/{{}}"></a>
-          <a class="icon delete" href="/delete/{{}}"></a>
-        </li>
-      </th>
-    </ul>
-    <ul class="column deploy">
-      <!-- {{}} -->
-      <th>
-        <li>
-          <!-- {{title}} -->
-          <a class="icon edit" href="/edit/{{}}"></a>
-          <a class="icon delete" href="/delete/{{}}"></a>
-        </li>
-      </th>
-    </ul>
   </div>
 </template>
 
@@ -61,16 +67,6 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Lato");
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  margin: 15px auto;
-  height: 80%;
-}
 
 .container.tasks {
   text-align: center;
@@ -85,18 +81,17 @@ export default {
 }
 
 .column li {
-  text-align: left;
-  padding: 15px;
   border-radius: 8px;
   list-style: none;
   border: 0.15em solid #afafaf;
   box-shadow: 0 0 1px 1px #ccc;
   font-family: Lato, sans-serif;
   word-break: break-all;
-  margin: 0.6em 0;
-  background: #fafafa;
-  transition: 0.15s background;
+  margin: 0.3em 0;
+  background: white;
+  transition: 0.15s;
   font-size: 1.1em;
+  background-color: white;
 }
 
 .column li:hover {
@@ -114,19 +109,19 @@ export default {
 }
 
 .column.open {
-  background: #7dbdbd;
+  background: #30bfbf;
 }
 
 .column.inProgress {
-  background: #66ccff;
+  background: orange;
 }
 
 .column.finished {
-  background: #c8c3e6;
+  background: green;
 }
 
 .column.deploy {
-  background: #e6c3e6;
+  background: red;
 }
 
 .header.open {
@@ -134,36 +129,33 @@ export default {
 }
 
 .header.inProgress {
-  background: #00aaff;
+  background: orange;
 }
 
 .header.finished {
-  background: #8f7ee6;
+  background: green;
 }
 
 .header.deploy {
-  background: #e6c3e6;
+  background: red;
 }
 
 a.button {
-  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  color: #fff;
-  background-color: #0275d8;
-  font-weight: 400;
-  line-height: 2;
+  background-color: red; /* Green */
+  border: 5px red;
+  color: black;
+  padding: 15px 32px;
   text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  user-select: none;
-  border: 2px solid transparent;
-  padding: 0.3rem 1rem;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out;
   text-decoration: none;
+  display: inline-block;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  border-radius: 25px;
 }
 
 a.button:hover {
-  background-color: #0284e9;
+  /* background-color: #0284e9; */
   border-color: black;
 }
 
@@ -189,5 +181,4 @@ a.button:hover {
 .delete:before {
   content: "🗑";
 }
-
 </style>

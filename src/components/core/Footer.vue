@@ -4,3 +4,13 @@
     <div>&copy; {{ new Date().getFullYear() }}</div>
   </v-footer>
 </template>
+
+<script>
+export default {
+  name: "App",
+  components: {}
+};
+</script>
+
+<style scoped>
+</style>

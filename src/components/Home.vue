@@ -1,7 +1,7 @@
 <template>
   <div>
     <template>
-      <a class="button" href="/create">Create New Task</a>
+      <a class="button" style="font-size: 20px" href="/create">Create New Task</a>
     </template>
     <div class="tasks container">
       <header>
@@ -13,21 +13,12 @@
       <ul class="column open">
         <!-- {{}} -->
         <li>
-          <v-card>
+          <v-card color="pink darken-2">
             <v-list-item-content>
               <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
               <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
             </v-list-item-content>
-            <v-card-actions>
-              <v-btn small>Button</v-btn>
-              <v-btn small>Button</v-btn>
-            </v-card-actions>
           </v-card>
-        </li>
-        <li>
-          {{'Test'}}
-          <a class="icon edit" href="/edit/{{}}"></a>
-          <a class="icon delete" href="/delete/{{}}"></a>
         </li>
       </ul>
       <ul class="column inProgress">
@@ -59,10 +50,13 @@
 </template>
 
 <script>
-export default {
-  name: "App",
-  components: {}
-};
+  export default {
+    data () {
+      return {
+        dialog: false,
+      }
+    },
+  }
 </script>
 
 <style scoped>
@@ -141,17 +135,16 @@ export default {
 }
 
 a.button {
-  background-color: red; /* Green */
-  border: 5px red;
-  color: black;
-  padding: 15px 32px;
+  background-color: black; /* Green */
+  color: rgba(255, 255, 255, 0.966);
+  padding: 10px 25px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 25px;
+  font-size: 10px;
   display: flex;
   justify-content: center;
-  border-radius: 25px;
+  border-radius: 200px;
 }
 
 a.button:hover {

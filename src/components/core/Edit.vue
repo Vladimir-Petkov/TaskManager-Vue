@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1>Create task</h1>
-    <form action="#/movie/create" method="POST">
+    <h1>Edit task</h1>
+    <form action="/movie/edit/{{}}" method="POST">
       <label>Title</label>
-      <input type="text" name="imageUrl" id="createImage" required/>
+      <input type="text" name="title" value="{{}}" id="editTitle" required/>
       <label>Description</label>
-      <textarea type="text" name="description" id="createDescription" required></textarea>
+      <textarea type="text" id="editDescription" name="description" required>{{}}</textarea>
       <label for="cars">Choose a task colum:</label>
       <select id="cars" required>
         <option value="open">Open</option>
@@ -14,7 +14,7 @@
         <option value="deploy">Deploy</option>
       </select>
       <br />
-      <input type="submit" value="Create" />
+      <input type="submit" value="Edit" />
     </form>
   </div>
 </template>

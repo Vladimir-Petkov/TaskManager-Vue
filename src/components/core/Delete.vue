@@ -1,14 +1,20 @@
 <template>
-  <div id="registerForm">
-    <h1>Register</h1>
-    <form action="/register" method="POST">
-      <label>Username</label>
-      <input type="text" name="username" id="registerUsername" />
-      <label>Password</label>
-      <input type="password" name="password" id="registerPassword" />
-      <label>Repeat Password</label>
-      <input type="password" name="repeatPassword" id="registerRepeatPassword" />
-      <input type="submit" value="Register" />
+  <div>
+    <h1>Delete task</h1>
+    <form action="#/movie/delete/{{}}" method="POST">
+      <label>Title</label>
+      <input type="text" name="title" value="{{}}" disabled />
+      <label>Description</label>
+      <textarea type="text" name="description" disabled>{{}}</textarea>
+      <label for="cars">Choosed task colum:</label>
+      <select id="cars" disabled>
+        <option value="open">Open</option>
+        <option value="inProgress">In progress</option>
+        <option value="finished">Finished</option>
+        <option value="deploy">Deploy</option>
+      </select>
+      <br />
+      <input type="submit" value="Delete" />
     </form>
   </div>
 </template>
@@ -32,7 +38,7 @@ h2 {
 /*Form style*/
 form {
   display: grid;
-  width: 45%;
+  width: 25%;
   margin: 0 auto;
   text-align: center;
   color: white;
@@ -68,5 +74,18 @@ input[type="submit"]:hover {
   background: #cebed7;
   color: #673d7e;
   text-decoration: underline;
+}
+
+select {
+  margin: 5px;
+  display: grid;
+  color: white;
+  background-color: black;
+  font-weight: bold;
+  border: 1px solid white;
+  border-radius: 10px;
+  text-align: center;
+  text-align-last: center;
+  -moz-text-align-last: center;
 }
 </style>

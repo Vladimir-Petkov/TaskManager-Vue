@@ -13,12 +13,19 @@
       <ul class="column open">
         <!-- {{}} -->
         <li>
-          <v-card color="pink darken-2">
-            <v-list-item-content>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfullyGreyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-card>
+          <v-expansion-panels focusable>
+            <v-expansion-panel v-for="(item,i) in 5" :key="i">
+              <v-expansion-panel-header>{{item}}</v-expansion-panel-header>
+              <v-expansion-panel-content>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                <v-card-actions>
+                  <v-btn color="#00B0FF" text>Edit</v-btn>
+                  <v-btn color="#DD2C00" text>Delete</v-btn>
+                </v-card-actions>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </li>
       </ul>
       <ul class="column inProgress">
@@ -50,13 +57,11 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        dialog: false,
-      }
-    },
+export default {
+  data() {
+    return {};
   }
+};
 </script>
 
 <style scoped>
@@ -145,33 +150,5 @@ a.button {
   display: flex;
   justify-content: center;
   border-radius: 200px;
-}
-
-a.button:hover {
-  /* background-color: #0284e9; */
-  border-color: black;
-}
-
-.column li:hover .icon {
-  opacity: 1;
-}
-
-.icon {
-  opacity: 0;
-  text-decoration: none;
-  color: black;
-  transition: 0.15s all;
-}
-
-.icon:hover {
-  color: #8a8a8a;
-}
-
-.edit:before {
-  content: "🖉";
-}
-
-.delete:before {
-  content: "🗑";
 }
 </style>

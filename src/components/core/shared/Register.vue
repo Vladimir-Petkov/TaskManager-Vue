@@ -60,7 +60,7 @@
         <p
           v-else-if="!$v.rePassword.sameAs"
           class="error"
-        >Repeat Password must be the same as password</p>
+        >Repeat Password does not match password!</p>
       </template>
       
       <input type="submit" value="Register" />

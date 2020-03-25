@@ -1,22 +1,116 @@
 <template>
   <div id="registerForm">
-    <h1>Register</h1>
-    <form action="/register" method="POST">
+    <h1>Register Form</h1>
+    <form @submit.prevent="submitHandler">
       <label>Username</label>
-      <input type="text" name="username" id="registerUsername" />
+      <input
+        type="text"
+        class="error"
+        name="username"
+        id="registerUsername"
+        v-model="username"
+        @blur="$v.username.$touch"
+      />
+      <template v-if="$v.username.$error">
+        <p v-if="!$v.username.required" class="error">Username is required</p>
+        <p
+          v-else-if="!$v.username.minLength"
+          class="error"
+        >Usernames must be at least 4 characters long</p>
+        <p
+          v-else-if="!$v.username.maxLength"
+          class="error"
+        >Username must be between 4 and 10 characters long</p>
+      </template>
+
+
       <label>Password</label>
-      <input type="password" name="password" id="registerPassword" />
+      <input
+        class="error"
+        type="password"
+        name="password"
+        id="registerPassword"
+        v-model="password"
+        @blur="$v.password.$touch"
+      />
+      <template v-if="$v.password.$error">
+        <p v-if="!$v.password.required" class="error">Password is required</p>
+        <p
+          v-else-if="!$v.password.minLength"
+          class="error"
+        >Password must be at least 5 characters long</p>
+        <p
+          v-else-if="!$v.password.maxLength"
+          class="error"
+        >Password must be between 5 and 12 characters long</p>
+      </template>
+
+
       <label>Repeat Password</label>
-      <input type="password" name="repeatPassword" id="registerRepeatPassword" />
+      <input
+        class="error"
+        type="password"
+        name="rePassword"
+        id="registerRepeatPassword"
+        v-model="rePassword"
+        @blur="$v.rePassword.$touch"
+      />
+      <template v-if="$v.rePassword.$error">
+        <p v-if="!$v.rePassword.required" class="error">Repeat Password is required</p>
+        <p
+          v-else-if="!$v.rePassword.sameAs"
+          class="error"
+        >Repeat Password must be the same as password</p>
+      </template>
+      
       <input type="submit" value="Register" />
     </form>
   </div>
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import {
+  required,
+  sameAs,
+  minLength,
+  maxLength
+} from "vuelidate/lib/validators";
+
 export default {
-  name: "App",
-  components: {}
+  name: 'Register',
+  mixins: [validationMixin],
+  data() {
+    return {
+      username: "",
+      password: "",
+      rePassword: ""
+    };
+  },
+  validations: {
+    username: {
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(10)
+    },
+    password: {
+      required,
+      minLength: minLength(5),
+      maxLength: maxLength(12)
+    },
+    rePassword: {
+      required,
+      sameAs: sameAs("password")
+    }
+  },
+  methods: {
+    submitHandler() {
+      this.$v.$touch();
+      if (this.$v.$error) {
+        return;
+      }
+    }
+  }
 };
 </script>
 
@@ -69,4 +163,5 @@ input[type="submit"]:hover {
   color: #673d7e;
   text-decoration: underline;
 }
+
 </style>

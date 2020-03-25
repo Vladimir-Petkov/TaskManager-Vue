@@ -1,35 +1,65 @@
 <template>
   <div id="loginForm">
-    <h1>Login</h1>
-    <form action="/login" method="POST">
+    <h1>Login Form</h1>
+    <form @submit.prevent="submitHandler">
       <label>Username</label>
-      <input type="text" name="username" id="loginUsername" />
+      <input
+        type="text"
+        name="username"
+        id="loginUsername"
+        v-model="username"
+        @blur="$v.username.$touch"
+      />
+      <template v-if="$v.username.$error">
+        <p v-if="!$v.username.required" class="error">Username is required</p>
+      </template>
+
+
       <label>Password</label>
-      <input type="password" name="password" id="loginPassword" />
+      <input
+        type="password"
+        name="password"
+        id="loginPassword"
+        v-model="password"
+        @blur="$v.password.$touch"
+      />
+      <template v-if="$v.password.$error">
+        <p v-if="!$v.password.required" class="error">Password is required</p>
+      </template>
+      
       <input type="submit" value="Login" />
     </form>
   </div>
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
+
 export default {
-  name: "contact",
+  name: "Login",
+  mixins: [validationMixin],
   data() {
     return {
-      valid: false,
-      name: "",
-      nameRules: [
-        v => !!v || "Name is required",
-        v => v.length <= 10 || "Name must be less than 10 characters"
-      ],
-      email: ""
-      // emailRules: [
-      //   v => !!v || "E-mail is required",
-      //   v =>
-      //     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-      //     "E-mail must be valid"
-      // ]
+      username: "",
+      password: ""
     };
+  },
+  validations: {
+    username: {
+      required
+    },
+    password: {
+      required
+    }
+  },
+  methods: {
+    submitHandler() {
+      this.$v.$touch();
+      if (this.$v.$error) {
+        return;
+      }
+    }
   }
 };
 </script>
@@ -83,5 +113,4 @@ input[type="submit"]:hover {
   color: #673d7e;
   text-decoration: underline;
 }
-
 </style>

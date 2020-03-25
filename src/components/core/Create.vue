@@ -1,18 +1,49 @@
 <template>
   <div>
-    <h1>Create task</h1>
-    <form action="#/movie/create" method="POST">
+    <h1>Create Task</h1>
+    <form @submit.prevent="submitHandler">
       <label>Title</label>
-      <input type="text" name="imageUrl" id="createImage" required/>
+      <input type="text" name="title" id="createImage" v-model="title" @blur="$v.title.$touch" />
+      <template v-if="$v.title.$error">
+        <p v-if="!$v.title.required" class="error">Title is required</p>
+        <p v-else-if="!$v.title.minLength" class="error">Title must be at least 5 characters long</p>
+        <p
+          v-else-if="!$v.title.maxLength"
+          class="error"
+        >Title must be between 5 and 20 characters long</p>
+      </template>
+
       <label>Description</label>
-      <textarea type="text" name="description" id="createDescription" required></textarea>
-      <label for="cars">Choose a task colum:</label>
-      <select id="cars" required>
+      <textarea
+        type="text"
+        name="description"
+        id="createDescription"
+        v-model="description"
+        @blur="$v.description.$touch"
+      ></textarea>
+      <template v-if="$v.description.$error">
+        <p v-if="!$v.description.required" class="error">Description is required</p>
+        <p
+          v-else-if="!$v.description.minLength"
+          class="error"
+        >Description must be at least 10 characters long</p>
+        <p
+          v-else-if="!$v.description.maxLength"
+          class="error"
+        >Description must be between 10 and 100 characters long</p>
+      </template>
+
+      <label for="tasks">Choose a task colum:</label>
+      <select name="taskColum" v-model="taskColum" @blur="$v.taskColum.$touch">
+        <option disabled value="">Select...</option>
         <option value="open">Open</option>
         <option value="inProgress">In progress</option>
         <option value="finished">Finished</option>
         <option value="deploy">Deploy</option>
       </select>
+      <template v-if="$v.taskColum.$error">
+        <p v-if="!$v.taskColum.required" class="error">Task Colum is required</p>
+      </template>
       <br />
       <input type="submit" value="Create" />
     </form>
@@ -20,9 +51,44 @@
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
+
 export default {
-  name: "App",
-  components: {}
+  name: "CreateTask",
+  mixins: [validationMixin],
+  data() {
+    return {
+      title: "",
+      description: "",
+      taskColum: ""
+    };
+  },
+  validations: {
+    title: {
+      required,
+      minLength: minLength(5),
+      maxLength: maxLength(20)
+    },
+    description: {
+      required,
+      minLength: minLength(10),
+      maxLength: maxLength(100)
+    },
+    taskColum: {
+      required
+    }
+  },
+  methods: {
+    submitHandler() {
+      this.$v.$touch();
+      if (this.$v.$error) {
+        return;
+      } else {
+        console.log(this.taskColum);
+      }
+    }
+  }
 };
 </script>
 
@@ -83,7 +149,7 @@ select {
   background-color: black;
   font-weight: bold;
   border: 1px solid white;
-  border-radius: 10px;
+  border-radius: 20px;
   text-align: center;
   text-align-last: center;
   -moz-text-align-last: center;

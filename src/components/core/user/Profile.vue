@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: "App",
+  name: "Profile",
   components: {}
 };
 </script>

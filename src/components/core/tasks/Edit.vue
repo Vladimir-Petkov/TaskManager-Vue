@@ -54,7 +54,7 @@ import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 export default {
-  name: "CreateTask",
+  name: "EditTask",
   mixins: [validationMixin],
   data() {
     return {

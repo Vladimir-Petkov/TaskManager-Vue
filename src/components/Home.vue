@@ -20,7 +20,7 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                 <v-card-actions>
-                  <v-btn color="red" text><router-link color='red' to="/edit">Edit</router-link></v-btn>
+                  <v-btn color="red" text><router-link to="/edit">Edit</router-link></v-btn>
                   <v-btn text><router-link to="/delete">Delete</router-link></v-btn>
                 </v-card-actions>
               </v-expansion-panel-content>
@@ -58,6 +58,7 @@
 
 <script>
 export default {
+  name: 'Home',
   data() {
     return {};
   }

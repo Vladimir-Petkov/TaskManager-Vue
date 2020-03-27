@@ -1,8 +1,8 @@
 <template>
   <div>
-    <template>
-      <a class="button" style="font-size: 20px" href="/create">Create New Task</a>
-    </template>
+    <div>
+      <v-btn x-large block color="primary" dark text="normal" to="/create">Create New Task</v-btn>
+    </div>
     <div class="tasks container">
       <header>
         <div class="column header open">Open</div>
@@ -20,8 +20,8 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                 <v-card-actions>
-                  <v-btn color="red" text><router-link to="/edit">Edit</router-link></v-btn>
-                  <v-btn text><router-link to="/delete">Delete</router-link></v-btn>
+                  <v-btn color="#00B0FF" text to="/edit">Edit</v-btn>
+                  <v-btn color="#DD2C00" text to="/delete">Delete</v-btn>
                 </v-card-actions>
               </v-expansion-panel-content>
             </v-expansion-panel>

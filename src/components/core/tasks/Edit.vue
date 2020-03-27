@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Create Task</h1>
+    <h1>Edit Task</h1>
     <form @submit.prevent="submitHandler">
       <label>Title</label>
       <input type="text" name="title" id="createImage" v-model="title" @blur="$v.title.$touch" />

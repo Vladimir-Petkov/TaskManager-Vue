@@ -8,17 +8,21 @@
         
       />
 
-      <v-toolbar-title><a href="/">Tasks Manager</a></v-toolbar-title>
+      <v-toolbar-title><router-link to="/">Tasks Manager</router-link></v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn outlined>
-        <a href="/login">Login</a>
+        <router-link to="/login">Login</router-link>
       </v-btn>
 
-      <v-btn outlined>Register</v-btn>
+      <v-btn outlined>
+        <router-link to="/register">Register</router-link>
+      </v-btn>
 
-      <v-btn outlined>Profile</v-btn>
+      <v-btn outlined>
+        <router-link to="/profile">Profile</router-link>
+      </v-btn>
     </v-toolbar>
   </div>
 </template>

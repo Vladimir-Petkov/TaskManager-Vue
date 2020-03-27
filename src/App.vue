@@ -1,27 +1,14 @@
 <template>
   <div>
-    <Navigation />
-    <Home />
-    <!-- <login /> -->
-    <!-- <Register /> -->
-    <!-- <Create /> -->
-    <!-- <Edit /> -->
-    <!-- <Delete /> -->
-    <!-- <Profile /> -->
+    <Header />
+      <router-view></router-view>
     <Footer />
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue';
-// import Create from './components/core/Create.vue';
-import Navigation from "./components/core/Navigation.vue";
-import Footer from "./components/core/Footer.vue";
-// import Login from "./components/core/shared/Login.vue";
-// import Register from './components/core/shared/Register.vue';
-// import Edit from './components/core/Edit.vue';
-// import Delete from './components/core/Delete.vue';
-// import Profile from './components/core/shared/Profile.vue';
+import Header from './components/core/common/Header.vue';
+import Footer from './components/core/common/Footer.vue';
 
 export default {
   name: "App",
@@ -29,15 +16,8 @@ export default {
     return {};
   },
   components: {
-    Home,
-    // Create,
-    Navigation,
-    Footer,
-    // Login,
-    // Register,
-    // Edit,
-    // Delete,
-    // Profile,
+    Header,
+    Footer
   }
 };
 </script>

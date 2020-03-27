@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Delete task</h1>
-    <form action="#/movie/delete/{{}}" method="POST">
+    <form @submit.prevent="submitHandler">
       <label>Title</label>
       <input type="text" name="title" value="{{}}" disabled />
       <label>Description</label>
@@ -14,7 +14,7 @@
         <option value="deploy">Deploy</option>
       </select>
       <br />
-      <input type="submit" value="Delete" />
+      <input type="submit" value="Delete"/>
     </form>
   </div>
 </template>
@@ -22,7 +22,11 @@
 <script>
 export default {
   name: "App",
-  components: {}
+  methods: {
+    submitHandler() {
+      
+    }
+  }
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div id="registerForm">
     <h1>Register Form</h1>
-    <form @submit.prevent="submitHandler">
+    <form @submit.prevent="register">
       <label>Username</label>
       <input
         type="text"
@@ -22,7 +22,6 @@
           class="error"
         >Username must be between 4 and 10 characters long</p>
       </template>
-
 
       <label>Password</label>
       <input
@@ -45,7 +44,6 @@
         >Password must be between 5 and 12 characters long</p>
       </template>
 
-
       <label>Repeat Password</label>
       <input
         class="error"
@@ -57,12 +55,9 @@
       />
       <template v-if="$v.rePassword.$error">
         <p v-if="!$v.rePassword.required" class="error">Repeat Password is required</p>
-        <p
-          v-else-if="!$v.rePassword.sameAs"
-          class="error"
-        >Repeat Password does not match password!</p>
+        <p v-else-if="!$v.rePassword.sameAs" class="error">Repeat Password does not match password!</p>
       </template>
-      
+
       <input type="submit" value="Register" />
     </form>
   </div>
@@ -76,15 +71,18 @@ import {
   minLength,
   maxLength
 } from "vuelidate/lib/validators";
+import requester from "../../../requester.js";
 
 export default {
-  name: 'Register',
-  mixins: [validationMixin],
+  name: "Register",
+  mixins: [validationMixin, requester],
   data() {
     return {
       username: "",
       password: "",
-      rePassword: ""
+      rePassword: "",
+      openTasks: 0,
+      closeTasks: 0
     };
   },
   validations: {
@@ -104,10 +102,27 @@ export default {
     }
   },
   methods: {
-    submitHandler() {
+    register() {
       this.$v.$touch();
       if (this.$v.$error) {
         return;
+      } else {
+        const payload = {
+          username: this.username,
+          password: this.password,
+          openTasks: 0,
+          closeTasks: 0
+        };
+
+        this.post("", "user", "Basic", payload)
+          .then(this.handler)
+          .then(data => {
+            sessionStorage.setItem("username", data.username);
+            sessionStorage.setItem("authtoken", data._kmd.authtoken);
+            sessionStorage.setItem("userId", data._id);
+
+            this.$router.push("login")
+          });
       }
     }
   }
@@ -163,5 +178,4 @@ input[type="submit"]:hover {
   color: #673d7e;
   text-decoration: underline;
 }
-
 </style>

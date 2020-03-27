@@ -1,7 +1,7 @@
 <template>
   <div id="loginForm">
     <h1>Login Form</h1>
-    <form @submit.prevent="submitHandler">
+    <form @submit.prevent="login">
       <label>Username</label>
       <input
         type="text"
@@ -14,7 +14,6 @@
         <p v-if="!$v.username.required" class="error">Username is required</p>
       </template>
 
-
       <label>Password</label>
       <input
         type="password"
@@ -26,7 +25,7 @@
       <template v-if="$v.password.$error">
         <p v-if="!$v.password.required" class="error">Password is required</p>
       </template>
-      
+
       <input type="submit" value="Login" />
     </form>
   </div>
@@ -35,14 +34,17 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
+import requester from "../../../requester.js";
+const loggedIn = sessionStorage.getItem('authtoken');
 
 export default {
   name: "Login",
-  mixins: [validationMixin],
+  mixins: [validationMixin, requester],
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
+      loggedIn
     };
   },
   validations: {
@@ -54,10 +56,25 @@ export default {
     }
   },
   methods: {
-    submitHandler() {
+    login() {
       this.$v.$touch();
       if (this.$v.$error) {
         return;
+      } else {
+        const payload = {
+          username: this.username,
+          password: this.password
+        };
+
+        this.post("login", "user", "Basic", payload)
+          .then(this.handler)
+          .then(data => {
+            sessionStorage.setItem("username", data.username);
+            sessionStorage.setItem("authtoken", data._kmd.authtoken);
+            sessionStorage.setItem("userId", data._id);
+            
+            this.$router.push("/")
+          });
       }
     }
   }

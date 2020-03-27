@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-btn x-large block color="primary" dark text="normal" to="/create">Create New Task</v-btn>
+      <v-btn x-large block color="primary" dark text to="/create">Create New Task</v-btn>
     </div>
     <div class="tasks container">
       <header>

@@ -35,7 +35,7 @@
 
       <label for="tasks">Choose a task colum:</label>
       <select name="taskColum" v-model="taskColum" @blur="$v.taskColum.$touch">
-        <option disabled value="">Select...</option>
+        <option disabled value>Select...</option>
         <option value="open">Open</option>
         <option value="inProgress">In progress</option>
         <option value="finished">Finished</option>
@@ -53,10 +53,11 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import requester from "../../../requester.js";
 
 export default {
   name: "CreateTask",
-  mixins: [validationMixin],
+  mixins: [validationMixin, requester],
   data() {
     return {
       title: "",
@@ -85,7 +86,18 @@ export default {
       if (this.$v.$error) {
         return;
       } else {
-        console.log(this.taskColum);
+        const payload = {
+          title: this.title,
+          description: this.description,
+          taskColum: this.taskColum
+        };
+        console.log(payload);
+
+        this.post("tasks", "appdata", "Kinvey", payload)
+          .then(this.handler)
+          .then(() => {
+            this.$router.push("/");
+          });
       }
     }
   }

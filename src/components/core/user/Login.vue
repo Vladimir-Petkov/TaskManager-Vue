@@ -73,7 +73,7 @@ export default {
             sessionStorage.setItem("authtoken", data._kmd.authtoken);
             sessionStorage.setItem("userId", data._id);
             
-            this.$router.push("/")
+            this.$router.push("/");
           });
       }
     }

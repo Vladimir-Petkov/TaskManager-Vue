@@ -11,45 +11,44 @@
         <div class="column header deploy">Deploy</div>
       </header>
       <ul class="column open">
-        <!-- {{}} -->
         <li>
-          <v-expansion-panels focusable>
-            <v-expansion-panel v-for="(item,i) in 5" :key="i">
-              <v-expansion-panel-header>{{item}}</v-expansion-panel-header>
-              <v-expansion-panel-content>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                <v-card-actions>
-                  <v-btn color="#00B0FF" text to="/edit">Edit</v-btn>
-                  <v-btn color="#DD2C00" text to="/delete">Delete</v-btn>
-                </v-card-actions>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
+          <single-task
+            v-for="(t, _id) of tasks"
+            :title="t.title"
+            :description="t.description"
+            :key='_id'
+            :taskColum='t.taskColum'
+          />
         </li>
       </ul>
       <ul class="column inProgress">
-        <!-- {{}} -->
-        <li>
-          {{'Gosho'}}
-          <a class="icon edit" href="/edit/{{}}"></a>
-          <a class="icon delete" href="/delete/{{}}"></a>
+        <li v-if="tasks.taskColum == 'inProgress'">
+          <single-task
+            v-for="(t, _id) in tasks"
+            :title="t.title"
+            :description="t.description"
+            :key="_id"
+          />
         </li>
       </ul>
       <ul class="column finished">
-        <!-- {{}} -->
-        <li>
-          {{'Gosho'}}
-          <a class="icon edit" href="/edit/{{}}"></a>
-          <a class="icon delete" href="/delete/{{}}"></a>
+        <li v-if="tasks.taskColum == 'finished'">
+          <single-task
+            v-for="(t, _id) in tasks"
+            :title="t.title"
+            :description="t.description"
+            :key="_id"
+          />
         </li>
       </ul>
       <ul class="column deploy">
-        <!-- {{}} -->
-        <li>
-          {{'Gosho'}}
-          <a class="icon edit" href="/edit/{{}}"></a>
-          <a class="icon delete" href="/delete/{{}}"></a>
+        <li v-if="tasks.taskColum == 'deploy'">
+          <single-task
+            v-for="(t, _id) in tasks"
+            :title="t.title"
+            :description="t.description"
+            :key="_id"
+          />
         </li>
       </ul>
     </div>
@@ -57,10 +56,32 @@
 </template>
 
 <script>
+import requester from "../requester.js";
+import singleTask from "./core/tasks/SingleTask.vue";
+
 export default {
-  name: 'Home',
+  mixins: [requester],
+  name: "Home",
+  components: {
+    singleTask
+  },
   data() {
-    return {};
+    return {
+      tasks: []
+    };
+  },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      this.get("tasks", "appdata", "Kinvey")
+        .then(this.handler)
+        .then(data => {
+          this.tasks = data;
+          console.log(this.tasks);
+        });
+    }
   }
 };
 </script>
@@ -153,7 +174,7 @@ a.button {
   border-radius: 200px;
 }
 
-.router-link-active{
-  color:red;
+.router-link-active {
+  color: red;
 }
 </style>

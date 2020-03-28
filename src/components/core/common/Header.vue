@@ -26,9 +26,10 @@
 </template>
 
 <script>
-import Logout from "../user/Logout.vue";
+import requester from "../../../requester.js";
 
 export default {
+  mixins: [ requester ],
   name: "Header",
   data() {
     return {
@@ -37,7 +38,13 @@ export default {
   },
   methods: {
     logout() {
-      Logout.userLogout();
+      this.post("_logout", "user", "Kinvey")
+        .then(this.handler)
+        .then(() => {
+          sessionStorage.clear();
+
+          this.$router.push("/login");
+        });
     }
   }
 };

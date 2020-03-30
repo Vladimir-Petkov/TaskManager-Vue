@@ -52,16 +52,18 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import requester from "../../../requester.js";
 
 export default {
   name: "EditTask",
-  mixins: [validationMixin],
-  props: ['id'],
+  mixins: [ validationMixin, requester ],
+  props: ["_id"],
   data() {
     return {
       title: "",
       description: "",
-      taskColum: ""
+      taskColum: "",
+      tasks: []
     };
   },
   validations: {
@@ -79,7 +81,21 @@ export default {
       required
     }
   },
+  created() {
+    this.fetchData();
+  },
   methods: {
+    fetchData() {
+      const id = this.$route.params.id;
+      console.log(id);
+
+      this.get(`events/${this._id}`, "appdata", "Kinvey")
+        .then(this.handler)
+        .then(editT => {
+          this.tasks = editT;
+          console.log(this.tasks);
+        });
+    },
     submitHandler() {
       this.$v.$touch();
       if (this.$v.$error) {

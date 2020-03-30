@@ -6,26 +6,12 @@
           <v-expansion-panel-content>
             {{ description }}
             <v-card-actions>
-              <v-btn color="#00B0FF" text to="/edit/:_id">Edit</v-btn>
-              <v-btn color="#DD2C00" text to="/delete/:_id">Delete</v-btn>
+              <v-btn color="#00B0FF" text :to="{ name: 'Edit', params: { _id: _id}}" >Edit</v-btn>
+              <v-btn color="#DD2C00" text :to="{ name: 'Delete', params: { _id: _id}}">Delete</v-btn>
             </v-card-actions>
           </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-    <!-- <li>
-      <v-expansion-panels focusable>
-        <v-expansion-panel>
-          <v-expansion-panel-header>{{ title }}</v-expansion-panel-header>
-          <v-expansion-panel-content>
-            {{ description }}
-            <v-card-actions>
-              <v-btn color="#00B0FF" text to="/edit">Edit</v-btn>
-              <v-btn color="#DD2C00" text to="/delete">Delete</v-btn>
-            </v-card-actions>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </li>-->
   </div>
 </template>
 
@@ -36,7 +22,8 @@ export default {
   props: {
     title: String,
     description: String,
-    taskColum: String
+    taskColum: String,
+    _id: String
   }
 };
 </script>

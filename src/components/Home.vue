@@ -10,27 +10,27 @@
         <div class="column header finished">Finished</div>
         <div class="column header deploy">Deploy</div>
       </header>
-      <ul v-for="(t, taskColum) of tasks" :key="taskColum">
-        <ul class="column open" v-if="t.taskColum == 'open'">
-          <li>
-            <single-task :title="t.title" :description="t.description" :id='_id'/>
+      <ul>
+        <ul class="column open">
+          <li v-for="t in openTasks" :key="t._id">
+            <single-task :title="t.title" :description="t.description" :_id="t._id" />
           </li>
         </ul>
-        <ul class="column inProgress" v-if="t.taskColum == 'inProgress'">
-          <li>
-            <single-task :title="t.title" :description="t.description" :id='_id'/>
-          </li>
-        </ul>
-
-        <ul class="column finished" v-if="t.taskColum == 'finished'">
-          <li>
-            <single-task :title="t.title" :description="t.description" :id='_id'/>
+        <ul class="column inProgress">
+          <li v-for="t in inProgressTasks" :key="t._id">
+            <single-task :title="t.title" :description="t.description" :_id="t._id" />
           </li>
         </ul>
 
-        <ul class="column deploy" v-if="t.taskColum == 'deploy'">
-          <li>
-            <single-task :title="t.title" :description="t.description" :id='_id'/>
+        <ul class="column finished">
+          <li v-for="t in finishedTasks" :key="t._id">
+            <single-task :title="t.title" :description="t.description" :_id="t._id" />
+          </li>
+        </ul>
+
+        <ul class="column deploy">
+          <li v-for="t in deployTasks" :key="t._id">
+            <single-task :title="t.title" :description="t.description" :_id="t._id" />
           </li>
         </ul>
       </ul>
@@ -52,6 +52,20 @@ export default {
     return {
       tasks: []
     };
+  },
+  computed: {
+    openTasks() {
+      return this.tasks.filter(t => t.taskColum == "open");
+    },
+    inProgressTasks() {
+      return this.tasks.filter(t => t.taskColum == "inProgress");
+    },
+    finishedTasks() {
+      return this.tasks.filter(t => t.taskColum == "finished");
+    },
+    deployTasks() {
+      return this.tasks.filter(t => t.taskColum == "deploy");
+    }
   },
   created() {
     this.fetchData();

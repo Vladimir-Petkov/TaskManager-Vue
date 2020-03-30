@@ -35,7 +35,7 @@
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import requester from "../../../requester.js";
-const loggedIn = sessionStorage.getItem('authtoken');
+const loggedIn = sessionStorage.getItem("authtoken");
 
 export default {
   name: "Login",
@@ -72,7 +72,7 @@ export default {
             sessionStorage.setItem("username", data.username);
             sessionStorage.setItem("authtoken", data._kmd.authtoken);
             sessionStorage.setItem("userId", data._id);
-            
+
             this.$router.push("/");
           });
       }

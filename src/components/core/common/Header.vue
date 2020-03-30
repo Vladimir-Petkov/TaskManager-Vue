@@ -14,7 +14,11 @@
       <v-spacer></v-spacer>
 
       <template v-if="loggedIn">
-        <v-btn outlined tag="a" :to="{ name: 'Profile', params: { id: userId}}">Welcome, {{ username }}</v-btn>
+        <v-btn
+          outlined
+          tag="a"
+          :to="{ name: 'Profile', params: { id: userId}}"
+        >Welcome, {{ username }}</v-btn>
         <v-btn outlined tag="a" @click="logout">Logout</v-btn>
       </template>
 

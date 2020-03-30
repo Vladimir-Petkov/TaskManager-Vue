@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template>
+    <template v-if="loggedIn">
       <div>
         <v-btn x-large block color="primary" dark text to="/create">Create New Task</v-btn>
       </div>
@@ -38,8 +38,9 @@
       </div>
     </template>
 
-    <!-- <template v-else>
-      <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+    <template v-else>
+      <h1>Test</h1>
+      <!-- <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
         <div style=" padding-left: 7%; padding-top:3%;" class="col-md-7">
           <h2 class="featurette-heading">
             The events that
@@ -56,11 +57,10 @@
           <p style="padding-left:25%" class="lead">Enjoy the life!</p>
         </div>
         <div class="col-md-5">
-          <img class="home-event-picture" src="" />
+          <img class="home-event-picture" src />
         </div>
-      </div>
-    </template> -->
-
+      </div> -->
+    </template>
   </div>
 </template>
 
@@ -76,7 +76,8 @@ export default {
   },
   data() {
     return {
-      tasks: []
+      tasks: [],
+      loggedIn: false
     };
   },
   computed: {
@@ -95,6 +96,7 @@ export default {
   },
   created() {
     this.fetchData();
+    this.loggedIn = sessionStorage.getItem("authtoken");
   },
   methods: {
     fetchData() {
@@ -103,6 +105,14 @@ export default {
         .then(d => {
           this.tasks = d;
         });
+    }
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.loggedIn = sessionStorage.getItem("authtoken");
+      }
     }
   }
 };

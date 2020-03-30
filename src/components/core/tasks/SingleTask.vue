@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-expansion-panels>
+    <v-expansion-panels focusable>
       <v-expansion-panel>
         <v-expansion-panel-header>{{ title }}</v-expansion-panel-header>
         <v-expansion-panel-content>

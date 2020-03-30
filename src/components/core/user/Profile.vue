@@ -3,35 +3,45 @@
     <h2 style="text-align:center">User Profile Card</h2>
 
     <div class="card">
-      <img src="https://banner2.cleanpng.com/20180920/efk/kisspng-user-logo-information-service-design-5ba34f88a0c3a6.5907352915374293846585.jpg" alt="John" style="width:100%" />
-      <h1>John Doe</h1>
-      <p class="title">CEO & Founder, Example</p>
-      <p>Harvard University</p>
-      <div style="margin: 24px 0;">
-        <a href="#">
-          <i class="fa fa-dribbble"></i>
-        </a>
-        <a href="#">
-          <i class="fa fa-twitter"></i>
-        </a>
-        <a href="#">
-          <i class="fa fa-linkedin"></i>
-        </a>
-        <a href="#">
-          <i class="fa fa-facebook"></i>
-        </a>
-      </div>
-      <p>
-        <button>Contact</button>
-      </p>
+      <img
+        src="https://banner2.cleanpng.com/20180920/efk/kisspng-user-logo-information-service-design-5ba34f88a0c3a6.5907352915374293846585.jpg"
+        alt="John"
+        style="width:80%"
+      />
+      <h1>{{ username }}</h1>
+      <p>My Tasks: {{ myTasks }}</p>
     </div>
   </div>
 </template>
 
 <script>
+import requester from "../../../requester.js";
+
 export default {
   name: "Profile",
-  components: {}
+  mixins: [requester],
+  data() {
+    return {
+      username: sessionStorage.getItem("username"),
+      myTasks: 0
+    };
+  },
+  created() {
+    this.getMyTasks();
+  },
+  methods: {
+    getMyTasks() {
+      this.get(
+        `tasks?query={"_acl.creator":"${sessionStorage.getItem("userId")}"}`,
+        "appdata",
+        "Kinvey"
+      )
+        .then(this.handler)
+        .then(t => {
+          this.myTasks = t.length;
+        });
+    }
+  }
 };
 </script>
 
@@ -67,7 +77,8 @@ a {
   color: white;
 }
 
-button:hover, a:hover {
+button:hover,
+a:hover {
   opacity: 0.7;
 }
 

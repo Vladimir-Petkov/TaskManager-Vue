@@ -80,9 +80,7 @@ export default {
     return {
       username: "",
       password: "",
-      rePassword: "",
-      openTasks: 0,
-      closeTasks: 0
+      rePassword: ""
     };
   },
   validations: {
@@ -109,20 +107,12 @@ export default {
       } else {
         const payload = {
           username: this.username,
-          password: this.password,
-          openTasks: 0,
-          closeTasks: 0
+          password: this.password
         };
 
         this.post("", "user", "Basic", payload)
           .then(this.handler)
-          .then(data => {
-            sessionStorage.setItem("username", data.username);
-            sessionStorage.setItem("authtoken", data._kmd.authtoken);
-            sessionStorage.setItem("userId", data._id);
-
-            this.$router.push("login")
-          });
+          .then(this.$router.push("login"));
       }
     }
   }

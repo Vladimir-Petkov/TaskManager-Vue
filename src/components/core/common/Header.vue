@@ -6,18 +6,18 @@
         alt
         style="width:2em; height:2em;"
       />
- 
+
       <v-toolbar-title>
         <router-link to="/">Tasks Manager</router-link>
       </v-toolbar-title>
- 
+
       <v-spacer></v-spacer>
- 
+
       <template v-if="loggedIn">
-        <v-btn outlined to="/profile">Profile</v-btn>
+        <v-btn outlined tag="a" :to="{ name: 'Profile', params: { id: userId}}">Welcome, {{ username }}</v-btn>
         <v-btn outlined tag="a" @click="logout">Logout</v-btn>
       </template>
- 
+
       <template v-else>
         <v-btn outlined to="/login">Login</v-btn>
         <v-btn outlined to="/register">Register</v-btn>
@@ -28,13 +28,15 @@
  
 <script>
 import requester from "../../../requester.js";
- 
+
 export default {
   mixins: [requester],
   name: "Header",
   data() {
     return {
-      loggedIn: false
+      loggedIn: false,
+      username: "",
+      userId: ""
     };
   },
   methods: {
@@ -43,19 +45,23 @@ export default {
         .then(this.handler)
         .then(() => {
           sessionStorage.clear();
- 
+
           this.$router.push("/login");
         });
     }
   },
   created() {
-    this.loggedIn = localStorage.getItem("authtoken");
+    this.loggedIn = sessionStorage.getItem("authtoken");
+    this.username = sessionStorage.getItem("username");
+    this.userId = sessionStorage.getItem("userId");
   },
   watch: {
     $route: {
       immediate: true,
       handler() {
-        this.loggedIn = localStorage.getItem("authtoken");
+        this.loggedIn = sessionStorage.getItem("authtoken");
+        this.username = sessionStorage.getItem("username");
+        this.userId = sessionStorage.getItem("userId");
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Create Task</h1>
-    <form @submit.prevent="submitHandler">
+    <form @submit.prevent="createTask">
       <label>Title</label>
       <input type="text" name="title" id="createImage" v-model="title" @blur="$v.title.$touch" />
       <template v-if="$v.title.$error">
@@ -81,7 +81,7 @@ export default {
     }
   },
   methods: {
-    submitHandler() {
+    createTask() {
       this.$v.$touch();
       if (this.$v.$error) {
         return;
@@ -91,7 +91,6 @@ export default {
           description: this.description,
           taskColum: this.taskColum
         };
-        console.log(payload);
 
         this.post("tasks", "appdata", "Kinvey", payload)
           .then(this.handler)

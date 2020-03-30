@@ -5,6 +5,7 @@ import Create from './components/core/tasks/Create.vue';
 import Edit from './components/core/tasks/Edit.vue';
 import Delete from './components/core/tasks/Delete.vue';
 import Profile from './components/core/user/Profile.vue';
+import notFound from './components/core/common/notFound.vue';
 
 export default [
     { path: '/', component: Home},
@@ -13,5 +14,6 @@ export default [
     { path: '/create', component: Create},
     { path: '/edit/:_id', name: 'Edit', component: Edit},
     { path: '/delete/:_id', name: 'Delete', component: Delete},
-    { path: '/profile/:_id', component: Profile},
+    { path: '/profile/:id', name:'Profile', component: Profile},
+    { path: '*', component: notFound},
 ]

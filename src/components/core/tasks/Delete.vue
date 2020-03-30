@@ -1,30 +1,60 @@
 <template>
   <div>
     <h1>Delete task</h1>
-    <form @submit.prevent="submitHandler">
+    <form @submit.prevent="deleteTask">
       <label>Title</label>
-      <input type="text" name="title" value="{{}}" disabled />
+      <input type="text" name="title" v-model="title" disabled />
       <label>Description</label>
-      <textarea type="text" name="description" disabled>{{}}</textarea>
-      <label for="cars">Choosed task colum:</label>
-      <select id="cars" disabled>
+      <textarea type="text" name="description" v-model="description" disabled></textarea>
+      <label for="tasks">Choosed task colum:</label>
+      <select name="taskColum" v-model="taskColum" disabled>
         <option value="open">Open</option>
         <option value="inProgress">In progress</option>
         <option value="finished">Finished</option>
         <option value="deploy">Deploy</option>
       </select>
       <br />
-      <input type="submit" value="Delete"/>
+      <input type="submit" value="Delete" />
     </form>
   </div>
 </template>
 
 <script>
+import requester from "../../../requester.js";
+
 export default {
   name: "DeleteTask",
+  mixins: [requester],
+  data() {
+    return {
+      title: "",
+      description: "",
+      taskColum: ""
+    };
+  },
+  created() {
+    this.fetchData();
+  },
   methods: {
-    submitHandler() {
-      
+    fetchData() {
+      const id = this.$route.params._id;
+
+      this.get(`tasks/${id}`, "appdata", "Kinvey")
+        .then(this.handler)
+        .then(del => {
+          this.title = del.title;
+          this.description = del.description;
+          this.taskColum = del.taskColum;
+        });
+    },
+    deleteTask() {
+      const id = this.$route.params._id;
+
+      this.del(`tasks/${id}`, "appdata", "Kinvey")
+        .then(this.handler)
+        .then(() => {
+          this.$router.push("/");
+        });
     }
   }
 };

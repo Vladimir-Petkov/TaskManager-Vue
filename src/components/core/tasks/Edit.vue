@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Edit Task</h1>
-    <form @submit.prevent="submitHandler">
+    <form @submit.prevent="editTask">
       <label>Title</label>
       <input type="text" name="title" id="createImage" v-model="title" @blur="$v.title.$touch" />
       <template v-if="$v.title.$error">
@@ -56,14 +56,12 @@ import requester from "../../../requester.js";
 
 export default {
   name: "EditTask",
-  mixins: [ validationMixin, requester ],
-  props: ["_id"],
+  mixins: [validationMixin, requester],
   data() {
     return {
       title: "",
       description: "",
-      taskColum: "",
-      tasks: []
+      taskColum: ""
     };
   },
   validations: {
@@ -86,22 +84,34 @@ export default {
   },
   methods: {
     fetchData() {
-      const id = this.$route.params.id;
-      console.log(id);
+      const id = this.$route.params._id;
 
-      this.get(`events/${this._id}`, "appdata", "Kinvey")
+      this.get(`tasks/${id}`, "appdata", "Kinvey")
         .then(this.handler)
         .then(editT => {
-          this.tasks = editT;
-          console.log(this.tasks);
+          this.title = editT.title;
+          this.description = editT.description;
+          this.taskColum = editT.taskColum;
         });
     },
-    submitHandler() {
+    editTask() {
       this.$v.$touch();
       if (this.$v.$error) {
         return;
       } else {
-        console.log(this.taskColum);
+        const id = this.$route.params._id;
+
+        const payload = {
+          title: this.title,
+          description: this.description,
+          taskColum: this.taskColum
+        };
+
+        this.put(`tasks/${id}`, "appdata", "Kinvey", payload)
+          .then(this.handler)
+          .then(() => {
+            this.$router.push("/");
+          });
       }
     }
   }

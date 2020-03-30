@@ -6,8 +6,8 @@
           <v-expansion-panel-content>
             {{ description }}
             <v-card-actions>
-              <v-btn color="#00B0FF" text to="/edit">Edit</v-btn>
-              <v-btn color="#DD2C00" text to="/delete">Delete</v-btn>
+              <v-btn color="#00B0FF" text to="/edit/:_id">Edit</v-btn>
+              <v-btn color="#DD2C00" text to="/delete/:_id">Delete</v-btn>
             </v-card-actions>
           </v-expansion-panel-content>
       </v-expansion-panel>

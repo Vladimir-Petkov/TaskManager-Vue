@@ -11,7 +11,7 @@ export default [
     { path: '/register', component: Register},
     { path: '/login', component: Login},
     { path: '/create', component: Create},
-    { path: '/edit', component: Edit},
-    { path: '/delete', component: Delete},
-    { path: '/profile', component: Profile},
+    { path: `/edit/:id`, component: Edit, props: true},
+    { path: '/delete/:_id', component: Delete},
+    { path: '/profile/:id', component: Profile},
 ]

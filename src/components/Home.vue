@@ -10,46 +10,29 @@
         <div class="column header finished">Finished</div>
         <div class="column header deploy">Deploy</div>
       </header>
-      <ul class="column open">
-        <li>
-          <single-task
-            v-for="(t, _id) of tasks"
-            :title="t.title"
-            :description="t.description"
-            :key='_id'
-            :taskColum='t.taskColum'
-          />
-        </li>
-      </ul>
-      <ul class="column inProgress">
-        <li v-if="tasks.taskColum == 'inProgress'">
-          <single-task
-            v-for="(t, _id) in tasks"
-            :title="t.title"
-            :description="t.description"
-            :key="_id"
-          />
-        </li>
-      </ul>
-      <ul class="column finished">
-        <li v-if="tasks.taskColum == 'finished'">
-          <single-task
-            v-for="(t, _id) in tasks"
-            :title="t.title"
-            :description="t.description"
-            :key="_id"
-          />
-        </li>
-      </ul>
-      <ul class="column deploy">
-        <li v-if="tasks.taskColum == 'deploy'">
-          <single-task
-            v-for="(t, _id) in tasks"
-            :title="t.title"
-            :description="t.description"
-            :key="_id"
-          />
-        </li>
+      <ul v-for="(t, taskColum) of tasks" :key="taskColum">
+        <ul class="column open" v-if="t.taskColum == 'open'">
+          <li>
+            <single-task :title="t.title" :description="t.description" :id='_id'/>
+          </li>
+        </ul>
+        <ul class="column inProgress" v-if="t.taskColum == 'inProgress'">
+          <li>
+            <single-task :title="t.title" :description="t.description" :id='_id'/>
+          </li>
+        </ul>
+
+        <ul class="column finished" v-if="t.taskColum == 'finished'">
+          <li>
+            <single-task :title="t.title" :description="t.description" :id='_id'/>
+          </li>
+        </ul>
+
+        <ul class="column deploy" v-if="t.taskColum == 'deploy'">
+          <li>
+            <single-task :title="t.title" :description="t.description" :id='_id'/>
+          </li>
+        </ul>
       </ul>
     </div>
   </div>
@@ -77,8 +60,8 @@ export default {
     fetchData() {
       this.get("tasks", "appdata", "Kinvey")
         .then(this.handler)
-        .then(data => {
-          this.tasks = data;
+        .then(d => {
+          this.tasks = d;
           console.log(this.tasks);
         });
     }

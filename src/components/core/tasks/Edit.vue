@@ -56,6 +56,7 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 export default {
   name: "EditTask",
   mixins: [validationMixin],
+  props: ['id'],
   data() {
     return {
       title: "",

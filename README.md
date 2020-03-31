@@ -41,7 +41,7 @@ TaskManager can help you with this.
 
 ### Design
 
-The app is fully responsible built with Vuetify and a website is https://vuetifyjs.com. Layout looks good on mobile phones, tablets and laptops / desktops. The app has good ui and great ux!
+The app is fully responsible built with Vuetify and a website is https://vuetifyjs.com. Layout looks good on laptops / desktops. The app has good ui and great ux!
 
 ### Endpoints
 

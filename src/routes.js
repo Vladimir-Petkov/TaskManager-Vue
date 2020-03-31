@@ -7,7 +7,7 @@ import Create from './components/core/tasks/Create.vue';
 import Edit from './components/core/tasks/Edit.vue';
 import Delete from './components/core/tasks/Delete.vue';
 import Profile from './components/core/user/Profile.vue';
-import notFound from './components/core/common/notFound.vue';
+import NotFound from './components/core/common/NotFound.vue';
 
 Vue.use(VueRouter);
 
@@ -21,7 +21,7 @@ const router = new VueRouter({
         { path: '/edit/:_id', name: 'Edit', component: Edit },
         { path: '/delete/:_id', name: 'Delete', component: Delete },
         { path: '/profile/:id', name: 'Profile', component: Profile },
-        { path: '*', component: notFound },
+        { path: '*', name: 'NotFound', component: NotFound },
     ]
 });
 

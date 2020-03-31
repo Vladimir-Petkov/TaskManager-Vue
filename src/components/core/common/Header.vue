@@ -18,6 +18,7 @@
           outlined
           tag="a"
           :to="{ name: 'Profile', params: { id: userId}}"
+          exact
         >Welcome, {{ username }}</v-btn>
         <v-btn outlined tag="a" @click="logout">Logout</v-btn>
       </template>
@@ -52,7 +53,7 @@ export default {
 
           this.$notify({
             group: "auth",
-            title: 'Logout',
+            title: "Logout",
             text: "Successfully Logout",
             type: "success"
           });

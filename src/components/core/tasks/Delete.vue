@@ -53,6 +53,13 @@ export default {
       this.del(`tasks/${id}`, "appdata", "Kinvey")
         .then(this.handler)
         .then(() => {
+          this.$notify({
+            group: "app",
+            title: 'Delete Task',
+            text: `Successfully Delete Task with Title: ${this.title}`,
+            type: "success"
+          });
+
           this.$router.push("/");
         });
     }

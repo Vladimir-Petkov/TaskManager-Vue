@@ -110,6 +110,14 @@ export default {
         this.put(`tasks/${id}`, "appdata", "Kinvey", payload)
           .then(this.handler)
           .then(() => {
+            this.$notify({
+              group: "app",
+              title: 'Edit Task',
+              text: `Successfully Edit Task with Title: ${this.title}`,
+              type: 'success',
+              width: "500%"
+            });
+
             this.$router.push("/");
           });
       }

@@ -112,7 +112,16 @@ export default {
 
         this.post("", "user", "Basic", payload)
           .then(this.handler)
-          .then(this.$router.push("login"));
+          .then(() => {
+            this.$notify({
+              group: "auth",
+              title: 'Register',
+              text: "Successfully Registered",
+              type: 'success'
+            });
+
+            this.$router.push("login");
+          });
       }
     }
   }

@@ -17,22 +17,24 @@ const requester = {
 
             return fetch(url, headers);
         },
-        put (endpoint, module, type, data) {
+        put(endpoint, module, type, data) {
             const headers = this.makeHeaders(type, 'PUT', data);
             const url = `${baseUrl}${module}/${appKey}/${endpoint}`;
 
             return fetch(url, headers);
         },
-        del (endpoint, module, type) {
+        del(endpoint, module, type) {
             const headers = this.makeHeaders(type, 'DELETE');
             const url = `${baseUrl}${module}/${appKey}/${endpoint}`;
 
             return fetch(url, headers);
         },
-        handler (response) {
+        handler(response) {
 
             if (response.status >= 400) {
-                throw new Error(`Something went wrong. Error: ${response.statusText}`);
+                this.$notify({
+                    group: 'auth', text: 'Wrong username or password, please try again later', width: '200px', type: 'error'
+                });
             }
 
             if (response.status !== 204) {
@@ -41,12 +43,12 @@ const requester = {
 
             return response;
         },
-        makeAuth (type) {
+        makeAuth(type) {
             return type === 'Basic'
                 ? 'Basic ' + btoa(appKey + ':' + appSecret)
                 : 'Kinvey ' + sessionStorage.getItem('authtoken');
         },
-        makeHeaders (type, httpMethod, data) {
+        makeHeaders(type, httpMethod, data) {
             const headers = {
                 method: httpMethod,
                 headers: {

@@ -73,6 +73,13 @@ export default {
             sessionStorage.setItem("authtoken", data._kmd.authtoken);
             sessionStorage.setItem("userId", data._id);
 
+            this.$notify({
+              group: "auth",
+              title: 'Login',
+              text: "Successfully Logged In",
+              type: 'success'
+            });
+
             this.$router.push("/");
           });
       }

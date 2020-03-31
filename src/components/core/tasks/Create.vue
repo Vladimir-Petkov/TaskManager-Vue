@@ -95,6 +95,13 @@ export default {
         this.post("tasks", "appdata", "Kinvey", payload)
           .then(this.handler)
           .then(() => {
+            this.$notify({
+              group: "app",
+              title: 'Create Task',
+              text: "Successfully Create Task",
+              type: 'success'
+            });
+
             this.$router.push("/");
           });
       }

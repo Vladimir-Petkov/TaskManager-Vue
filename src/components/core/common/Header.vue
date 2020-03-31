@@ -50,6 +50,13 @@ export default {
         .then(() => {
           sessionStorage.clear();
 
+          this.$notify({
+            group: "auth",
+            title: 'Logout',
+            text: "Successfully Logout",
+            type: "success"
+          });
+
           this.$router.push("/login");
         });
     }

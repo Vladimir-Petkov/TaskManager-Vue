@@ -32,7 +32,8 @@ html {
 
 .error {
   color: red;
-  font-size: 1.15em;
+  font-size: 1.10em;
+  padding: 5px;
 }
 
 </style>

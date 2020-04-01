@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-expansion-panels focusable>
+    <v-expansion-panels focusable class="elevation-0">
       <v-expansion-panel>
         <v-expansion-panel-header>{{ title }}</v-expansion-panel-header>
         <v-expansion-panel-content>
@@ -29,4 +29,7 @@ export default {
 </script>
 
 <style scoped>
+.v-expansion-panels {
+  box-shadow: none;
+}
 </style>

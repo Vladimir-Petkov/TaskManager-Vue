@@ -14,18 +14,18 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        { path: '/', component: Home },
-        { path: '/register', name: 'register', component: Register },
-        { path: '/login', name: 'login', component: Login },
-        { path: '/create', component: Create },
+        { path: '/', name: 'Home', component: Home },
+        { path: '/register', name: 'Register', component: Register, beforeEnter: anonymousGuard },
+        { path: '/login', name: 'Login', component: Login, beforeEnter: anonymousGuard },
+        { path: '/create', name: 'Create', component: Create },
         { path: '/edit/:_id', name: 'Edit', component: Edit },
         { path: '/delete/:_id', name: 'Delete', component: Delete },
         { path: '/profile/:id', name: 'Profile', component: Profile },
-        { path: '*', name: 'NotFound', component: NotFound },
+        { path: '*', component: NotFound },
     ]
 });
 
-const openRoutes = ['login', 'register'];
+const openRoutes = ['Login', 'Register', 'Home'];
 
 router.beforeEach((to, from, next) => {
     if (openRoutes.includes(to.name)) {
@@ -36,5 +36,13 @@ router.beforeEach((to, from, next) => {
         next('/login');
     }
 });
+
+function anonymousGuard(to, from, next) {
+    if (sessionStorage.getItem('authtoken') !== null) {
+        next('/');
+    } else {
+        next();
+    }
+}
 
 export default router;

@@ -8,7 +8,7 @@
       />
 
       <v-toolbar-title>
-        <router-link to="/" exact>Tasks Manager</router-link>
+        <router-link to="/">Tasks Manager</router-link>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>

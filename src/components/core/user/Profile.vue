@@ -22,7 +22,7 @@ export default {
   mixins: [requester],
   data() {
     return {
-      username: sessionStorage.getItem("username"),
+      username: sessionStorage.getItem("username") || null,
       myTasks: 0
     };
   },
@@ -31,15 +31,19 @@ export default {
   },
   methods: {
     getMyTasks() {
-      this.get(
-        `tasks?query={"_acl.creator":"${sessionStorage.getItem("userId")}"}`,
-        "appdata",
-        "Kinvey"
-      )
-        .then(this.handler)
-        .then(t => {
-          this.myTasks = t.length;
-        });
+      if (!this.username) {
+        return;
+      } else {
+        this.get(
+          `tasks?query={"_acl.creator":"${sessionStorage.getItem("userId")}"}`,
+          "appdata",
+          "Kinvey"
+        )
+          .then(this.handler)
+          .then(t => {
+            this.myTasks = t.length;
+          });
+      }
     }
   }
 };

@@ -8,7 +8,7 @@
       />
 
       <v-toolbar-title>
-        <router-link to="/">Tasks Manager</router-link>
+        <router-link to="/" exact>Tasks Manager</router-link>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -18,14 +18,13 @@
           outlined
           tag="a"
           :to="{ name: 'Profile', params: { id: userId}}"
-          exact
         >Welcome, {{ username }}</v-btn>
         <v-btn outlined tag="a" @click="logout">Logout</v-btn>
       </template>
 
       <template v-else>
-        <v-btn outlined to="/login">Login</v-btn>
-        <v-btn outlined to="/register">Register</v-btn>
+        <v-btn outlined to="/login" >Login</v-btn>
+        <v-btn outlined to="/register" >Register</v-btn>
       </template>
     </v-toolbar>
   </div>

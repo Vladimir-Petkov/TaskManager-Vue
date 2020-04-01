@@ -6,8 +6,8 @@
         <v-expansion-panel-content>
           {{ description }}
           <v-card-actions>
-            <v-btn color="#00B0FF" text :to="{ name: 'Edit', params: { _id: _id}}" exact>Edit</v-btn>
-            <v-btn color="#DD2C00" text :to="{ name: 'Delete', params: { _id: _id}}" exact>Delete</v-btn>
+            <v-btn color="#00B0FF" text :to="{ name: 'Edit', params: { _id: _id}}">Edit</v-btn>
+            <v-btn color="#DD2C00" text :to="{ name: 'Delete', params: { _id: _id}}">Delete</v-btn>
           </v-card-actions>
         </v-expansion-panel-content>
       </v-expansion-panel>

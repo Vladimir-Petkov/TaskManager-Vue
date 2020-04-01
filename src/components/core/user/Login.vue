@@ -12,6 +12,14 @@
       />
       <template v-if="$v.username.$error">
         <p v-if="!$v.username.required" class="error">Username is required</p>
+        <p
+          v-else-if="!$v.username.minLength"
+          class="error"
+        >Usernames must be at least 4 characters long</p>
+        <p
+          v-else-if="!$v.username.maxLength"
+          class="error"
+        >Username must be between 4 and 10 characters long</p>
       </template>
 
       <label>Password</label>
@@ -24,6 +32,14 @@
       />
       <template v-if="$v.password.$error">
         <p v-if="!$v.password.required" class="error">Password is required</p>
+        <p
+          v-else-if="!$v.password.minLength"
+          class="error"
+        >Password must be at least 5 characters long</p>
+        <p
+          v-else-if="!$v.password.maxLength"
+          class="error"
+        >Password must be between 5 and 12 characters long</p>
       </template>
 
       <input type="submit" value="Login" />
@@ -33,7 +49,8 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required } from "vuelidate/lib/validators";
+import { required, minLength,
+  maxLength } from "vuelidate/lib/validators";
 import requester from "../../../requester.js";
 const loggedIn = sessionStorage.getItem("authtoken");
 
@@ -49,10 +66,14 @@ export default {
   },
   validations: {
     username: {
-      required
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(10)
     },
     password: {
-      required
+      required,
+      minLength: minLength(5),
+      maxLength: maxLength(12)
     }
   },
   methods: {
@@ -75,9 +96,9 @@ export default {
 
             this.$notify({
               group: "auth",
-              title: 'Login',
+              title: "Login",
               text: "Successfully Logged In",
-              type: 'success'
+              type: "success"
             });
 
             this.$router.push("/");

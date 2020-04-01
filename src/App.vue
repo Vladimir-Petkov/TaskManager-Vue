@@ -30,4 +30,9 @@ html {
   font-family: "Nunito", sans-serif;
 }
 
+.error {
+  color: red;
+  font-size: 1.15em;
+}
+
 </style>

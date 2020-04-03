@@ -80,6 +80,8 @@ The app is fully responsible built with Vuetify and a website is https://vuetify
 
 #### Guests (not logged in) are allowed to 
 
+* home
+
 * register
 
 * login

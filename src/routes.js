@@ -5,6 +5,7 @@ import Register from './components/core/user/Register.vue';
 import Login from "./components/core/user/Login.vue";
 import Create from './components/core/tasks/Create.vue';
 import Edit from './components/core/tasks/Edit.vue';
+import Details from './components/core/tasks/Details.vue';
 import Delete from './components/core/tasks/Delete.vue';
 import Profile from './components/core/user/Profile.vue';
 import NotFound from './components/core/common/NotFound.vue';
@@ -19,6 +20,7 @@ const router = new VueRouter({
         { path: '/login', name: 'Login', component: Login, beforeEnter: anonymousGuard },
         { path: '/create', name: 'Create', component: Create },
         { path: '/edit/:_id', name: 'Edit', component: Edit },
+        { path: '/details', name: 'Details', component: Details },
         { path: '/delete/:_id', name: 'Delete', component: Delete },
         { path: '/profile/:id', name: 'Profile', component: Profile },
         { path: '*', component: NotFound },

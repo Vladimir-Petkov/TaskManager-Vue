@@ -68,6 +68,8 @@ The app is fully responsible built with Vuetify and a website is https://vuetify
     * `/edit/:id`
 
     * `/delete/:id`
+    
+    * `/details/:id`
 
 * POST
 
@@ -94,8 +96,9 @@ The app is fully responsible built with Vuetify and a website is https://vuetify
 
 * edit Tasks
 
+* details Task
+
 * delete Tasks
 
 * profile page
 
-* all tasks added by user

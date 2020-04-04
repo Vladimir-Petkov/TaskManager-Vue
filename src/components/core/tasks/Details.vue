@@ -56,6 +56,14 @@ export default {
         .then(d => {
           this.tasks = d;
           this.creator = d._acl.creator;
+
+          if (this.tasks.pplWorkingIn.length > 0) {
+            for (const name of this.tasks.pplWorkingIn) {
+              if (name == this.username) {
+                this.worIn = true;
+              }
+            }
+          }
         });
     },
     workingIn() {
@@ -70,6 +78,13 @@ export default {
           this.tasks = d;
 
           this.worIn = true;
+
+          this.$notify({
+            group: "app",
+            title: "Working In Task",
+            text: "Successfully Working In Task",
+            type: "success"
+          });
         });
     },
     workingOut() {
@@ -84,16 +99,15 @@ export default {
         .then(d => {
           this.tasks = d;
 
-          this.worIn = true;
+          this.worIn = false;
+
+          this.$notify({
+            group: "app",
+            title: "Working Out Task",
+            text: "Successfully Working Out Task",
+            type: "success"
+          });
         });
-    }
-  },
-  watch: {
-    $route: {
-      immediate: true,
-      handler() {
-        
-      }
     }
   }
 };

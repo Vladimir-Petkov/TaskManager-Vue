@@ -5,9 +5,9 @@
         <v-expansion-panel-header>{{ title }}</v-expansion-panel-header>
         <v-expansion-panel-content>
           {{ description }}
-          <v-card-actions>
+          <div class="text-xs-center">
             <v-btn color="#00B0FF" text :to="{ name: 'Details', params: { _id: _id}}">Details</v-btn>
-          </v-card-actions>
+          </div>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>

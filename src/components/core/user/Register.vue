@@ -5,7 +5,6 @@
       <label>Username</label>
       <input
         type="text"
-        class="error"
         name="username"
         id="registerUsername"
         v-model="username"
@@ -25,7 +24,6 @@
 
       <label>Password</label>
       <input
-        class="error"
         type="password"
         name="password"
         id="registerPassword"
@@ -46,7 +44,6 @@
 
       <label>Repeat Password</label>
       <input
-        class="error"
         type="password"
         name="rePassword"
         id="registerRepeatPassword"

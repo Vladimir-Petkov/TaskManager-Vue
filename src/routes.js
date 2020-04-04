@@ -20,7 +20,7 @@ const router = new VueRouter({
         { path: '/login', name: 'Login', component: Login, beforeEnter: anonymousGuard },
         { path: '/create', name: 'Create', component: Create },
         { path: '/edit/:_id', name: 'Edit', component: Edit },
-        { path: '/details', name: 'Details', component: Details },
+        { path: '/details/:_id', name: 'Details', component: Details },
         { path: '/delete/:_id', name: 'Delete', component: Delete },
         { path: '/profile/:id', name: 'Profile', component: Profile },
         { path: '*', component: NotFound },

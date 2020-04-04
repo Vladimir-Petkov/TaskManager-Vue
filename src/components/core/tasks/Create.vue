@@ -62,7 +62,8 @@ export default {
     return {
       title: "",
       description: "",
-      taskColum: ""
+      taskColum: "",
+      pplWorkingIn: []
     };
   },
   validations: {
@@ -89,7 +90,8 @@ export default {
         const payload = {
           title: this.title,
           description: this.description,
-          taskColum: this.taskColum
+          taskColum: this.taskColum,
+          pplWorkingIn: this.pplWorkingIn
         };
 
         this.post("tasks", "appdata", "Kinvey", payload)

@@ -1,9 +1,9 @@
 <template>
-  <div id="detailsMovie">
+  <div>
     <h1>Details Task</h1>
     <div class="task">
       <h2>Task Tittle: {{ tasks.title }}</h2>
-      <p>Task Description: {{ tasks.description }}</p>
+      <p>Task Description: {{ tasks.description}}</p>
       <p>Task Colum: {{ tasks.taskColum }}</p>
       <h2>People working in</h2>
       <ul class="pplIn" v-for="p in tasks.pplWorkingIn" :key="p._id">
@@ -20,9 +20,9 @@
       </div>
       <br />
       <div class="text-xs-center">
-        <v-btn color="#00B0FF" text :to="{ name: 'Edit', params: { _id: tasks._id}}">Edit Task</v-btn>
+        <v-btn color="#00B0FF" text :to="{ name: 'Edit', params: { _id: id}}">Edit Task</v-btn>
         <template v-if="creator == userId">
-          <v-btn color="#DD2C00" text :to="{ name: 'Delete', params: { _id: tasks._id}}">Delete Task</v-btn>
+          <v-btn color="#DD2C00" text :to="{ name: 'Delete', params: { _id: id}}">Delete Task</v-btn>
         </template>
       </div>
     </div>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import requester from "../../../requester.js";
+import requester from "../../requester";
 
 export default {
   name: "Details",
@@ -41,7 +41,8 @@ export default {
       userId: sessionStorage.getItem("userId"),
       username: sessionStorage.getItem("username"),
       creator: "",
-      worIn: false
+      worIn: false,
+      id: this.$route.params._id
     };
   },
   created() {
@@ -49,15 +50,13 @@ export default {
   },
   methods: {
     fetchData() {
-      const id = this.$route.params._id;
-
-      this.get(`tasks/${id}`, "appdata", "Kinvey")
+      this.get(`tasks/${this.id}`, "appdata", "Kinvey")
         .then(this.handler)
         .then(d => {
           this.tasks = d;
           this.creator = d._acl.creator;
 
-          if (this.tasks.pplWorkingIn.length > 0) {
+          if (this.tasks.pplWorkingIn && this.tasks.pplWorkingIn.length > 0) {
             for (const name of this.tasks.pplWorkingIn) {
               if (name == this.username) {
                 this.worIn = true;
@@ -67,12 +66,11 @@ export default {
         });
     },
     workingIn() {
-      const id = this.$route.params._id;
       const username = sessionStorage.getItem("username");
 
       this.tasks.pplWorkingIn.push(username);
 
-      this.put(`tasks/${id}`, "appdata", "Kinvey", this.tasks)
+      this.put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
         .then(this.handler)
         .then(d => {
           this.tasks = d;
@@ -88,13 +86,12 @@ export default {
         });
     },
     workingOut() {
-      const id = this.$route.params._id;
       const username = sessionStorage.getItem("username");
 
       let index = this.tasks.pplWorkingIn.indexOf(username);
       this.tasks.pplWorkingIn.splice(index, 1);
 
-      this.put(`tasks/${id}`, "appdata", "Kinvey", this.tasks)
+      this.put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
         .then(this.handler)
         .then(d => {
           this.tasks = d;
@@ -132,7 +129,7 @@ p {
 
 div.task {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
 }

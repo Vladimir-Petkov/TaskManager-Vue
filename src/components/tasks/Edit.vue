@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Create Task</h1>
-    <form @submit.prevent="createTask">
+    <h1>Edit Task</h1>
+    <form @submit.prevent="editTask">
       <label>Title</label>
       <input type="text" name="title" id="createImage" v-model="title" @blur="$v.title.$touch" />
       <template v-if="$v.title.$error">
@@ -35,7 +35,6 @@
 
       <label for="tasks">Choose a task colum:</label>
       <select name="taskColum" v-model="taskColum" @blur="$v.taskColum.$touch">
-        <option disabled value>Select...</option>
         <option value="open">Open</option>
         <option value="inProgress">In progress</option>
         <option value="finished">Finished</option>
@@ -53,10 +52,10 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
-import requester from "../../../requester.js";
+import requester from "../../requester";
 
 export default {
-  name: "CreateTask",
+  name: "EditTask",
   mixins: [validationMixin, requester],
   data() {
     return {
@@ -81,12 +80,29 @@ export default {
       required
     }
   },
+  created() {
+    this.fetchData();
+  },
   methods: {
-    createTask() {
+    fetchData() {
+      const id = this.$route.params._id;
+
+      this.get(`tasks/${id}`, "appdata", "Kinvey")
+        .then(this.handler)
+        .then(editT => {
+          this.title = editT.title;
+          this.description = editT.description;
+          this.taskColum = editT.taskColum;
+          this.pplWorkingIn = editT.pplWorkingIn;
+        });
+    },
+    editTask() {
       this.$v.$touch();
       if (this.$v.$error) {
         return;
       } else {
+        const id = this.$route.params._id;
+
         const payload = {
           title: this.title,
           description: this.description,
@@ -94,14 +110,15 @@ export default {
           pplWorkingIn: this.pplWorkingIn
         };
 
-        this.post("tasks", "appdata", "Kinvey", payload)
+        this.put(`tasks/${id}`, "appdata", "Kinvey", payload)
           .then(this.handler)
           .then(() => {
             this.$notify({
               group: "app",
-              title: 'Create Task',
-              text: "Successfully Create Task",
-              type: 'success'
+              title: 'Edit Task',
+              text: `Successfully Edit Task with Title: ${this.title}`,
+              type: 'success',
+              width: "500%"
             });
 
             this.$router.push("/");
@@ -169,7 +186,7 @@ select {
   background-color: black;
   font-weight: bold;
   border: 1px solid white;
-  border-radius: 20px;
+  border-radius: 10px;
   text-align: center;
   text-align-last: center;
   -moz-text-align-last: center;

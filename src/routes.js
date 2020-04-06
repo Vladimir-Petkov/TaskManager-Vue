@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from './components/Home.vue';
-import Register from './components/core/user/Register.vue';
-import Login from "./components/core/user/Login.vue";
-import Create from './components/core/tasks/Create.vue';
-import Edit from './components/core/tasks/Edit.vue';
-import Details from './components/core/tasks/Details.vue';
-import Delete from './components/core/tasks/Delete.vue';
-import Profile from './components/core/user/Profile.vue';
-import NotFound from './components/core/common/NotFound.vue';
+import Register from './components/user/Register.vue';
+import Login from "./components/user/Login.vue";
+import Create from './components/tasks/Create.vue';
+import Edit from './components/tasks/Edit.vue';
+import Details from './components/tasks/Details.vue';
+import Delete from './components/tasks/Delete.vue';
+import Profile from './components/user/Profile.vue';
+import NotFound from './components/common/NotFound.vue';
 
 Vue.use(VueRouter);
 

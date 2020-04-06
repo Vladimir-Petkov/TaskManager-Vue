@@ -1,12 +1,12 @@
 <template>
-  <div id="loginForm">
-    <h1>Login Form</h1>
-    <form @submit.prevent="login">
+  <div id="registerForm">
+    <h1>Register Form</h1>
+    <form @submit.prevent="register">
       <label>Username</label>
       <input
         type="text"
         name="username"
-        id="loginUsername"
+        id="registerUsername"
         v-model="username"
         @blur="$v.username.$touch"
       />
@@ -26,7 +26,7 @@
       <input
         type="password"
         name="password"
-        id="loginPassword"
+        id="registerPassword"
         v-model="password"
         @blur="$v.password.$touch"
       />
@@ -42,26 +42,42 @@
         >Password must be between 5 and 12 characters long</p>
       </template>
 
-      <input type="submit" value="Login" />
+      <label>Repeat Password</label>
+      <input
+        type="password"
+        name="rePassword"
+        id="registerRepeatPassword"
+        v-model="rePassword"
+        @blur="$v.rePassword.$touch"
+      />
+      <template v-if="$v.rePassword.$error">
+        <p v-if="!$v.rePassword.required" class="error">Repeat Password is required</p>
+        <p v-else-if="!$v.rePassword.sameAs" class="error">Repeat Password does not match password!</p>
+      </template>
+
+      <input type="submit" value="Register" />
     </form>
   </div>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required, minLength,
-  maxLength } from "vuelidate/lib/validators";
-import requester from "../../../requester.js";
-const loggedIn = sessionStorage.getItem("authtoken");
+import {
+  required,
+  sameAs,
+  minLength,
+  maxLength
+} from "vuelidate/lib/validators";
+import requester from "../../requester";
 
 export default {
-  name: "Login",
+  name: "Register",
   mixins: [validationMixin, requester],
   data() {
     return {
       username: "",
       password: "",
-      loggedIn
+      rePassword: ""
     };
   },
   validations: {
@@ -74,10 +90,14 @@ export default {
       required,
       minLength: minLength(5),
       maxLength: maxLength(12)
+    },
+    rePassword: {
+      required,
+      sameAs: sameAs("password")
     }
   },
   methods: {
-    login() {
+    register() {
       this.$v.$touch();
       if (this.$v.$error) {
         return;
@@ -87,21 +107,17 @@ export default {
           password: this.password
         };
 
-        this.post("login", "user", "Basic", payload)
+        this.post("", "user", "Basic", payload)
           .then(this.handler)
-          .then(data => {
-            sessionStorage.setItem("username", data.username);
-            sessionStorage.setItem("authtoken", data._kmd.authtoken);
-            sessionStorage.setItem("userId", data._id);
-
+          .then(() => {
             this.$notify({
               group: "auth",
-              title: "Login",
-              text: "Successfully Logged In",
-              type: "success"
+              title: 'Register',
+              text: "Successfully Registered",
+              type: 'success'
             });
 
-            this.$router.push("/");
+            this.$router.push("login");
           });
       }
     }

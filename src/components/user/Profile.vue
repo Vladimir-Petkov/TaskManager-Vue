@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import requester from "../../../requester.js";
+import requester from "../../requester";
 
 export default {
   name: "Profile",

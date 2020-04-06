@@ -62,7 +62,7 @@
 
 <script>
 import requester from "../requester.js";
-import singleTask from "./core/tasks/SingleTask.vue";
+import singleTask from "./tasks/SingleTask.vue";
 
 export default {
   mixins: [requester],

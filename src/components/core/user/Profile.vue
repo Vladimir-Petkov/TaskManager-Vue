@@ -8,8 +8,17 @@
         alt="John"
         style="width:80%"
       />
-      <h1>{{ username }}</h1>
-      <p>My Tasks: {{ myTasks }}</p>
+      <h1>Username: {{ username }}</h1>
+      <p>My Created Tasks: {{ myTasks.length || 0 }}</p>
+      <ul class="pplIn" v-for="t in myTasks" :key="t._id">
+        <li>{{ t.title }}</li>
+      </ul>
+      <br />
+
+      <p>The Tasks I work on: {{ workingOn.length || 0 }}</p>
+      <ul class="pplIn" v-for="(w, i) in workingOn" :key="i">
+        <li>{{ w }}</li>
+      </ul>
     </div>
   </div>
 </template>
@@ -23,11 +32,13 @@ export default {
   data() {
     return {
       username: sessionStorage.getItem("username") || null,
-      myTasks: 0
+      myTasks: [],
+      workingOn: []
     };
   },
   created() {
     this.getMyTasks();
+    this.tasksIworkedOn();
   },
   methods: {
     getMyTasks() {
@@ -41,9 +52,22 @@ export default {
         )
           .then(this.handler)
           .then(t => {
-            this.myTasks = t.length;
+            this.myTasks = t;
           });
       }
+    },
+    tasksIworkedOn() {
+      this.get("tasks", "appdata", "Kinvey")
+        .then(this.handler)
+        .then(t => {
+          t.forEach(t => {
+            for (const name of t.pplWorkingIn) {
+              if (name == this.username) {
+                this.workingOn.push(t.title);
+              }
+            }
+          });
+        });
     }
   }
 };
@@ -88,9 +112,19 @@ a:hover {
 
 h1 {
   color: white;
+  margin-bottom: 5px;
 }
 
 p {
   color: white;
+  margin-bottom: 5px;
+}
+
+ul.pplIn {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: white;
+  margin-bottom: 5px;
 }
 </style>

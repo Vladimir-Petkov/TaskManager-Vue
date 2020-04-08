@@ -1,13 +1,5 @@
 # TaskManager
 
-## The technologies
-
-1. [Vue.js](https://vuejs.org/), a JavaScript library for building user interfaces;
-
-2. [Vue CLI](https://cli.vuejs.org/), Out-of-the-box support for Babel, TypeScript, ESLint, PostCSS, PWA, Unit Testing & End-to-end Testing.;
-
-3. [Kinvey DB](https://www.progress.com/kinvey), a NoSQL database;
-
 ## Project setup
 ```
 npm install
@@ -32,6 +24,14 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## The application
+
+## The technologies
+
+1. [Vue.js](https://vuejs.org/), a JavaScript library for building user interfaces;
+
+2. [Vue CLI](https://cli.vuejs.org/), Out-of-the-box support for Babel, TypeScript, ESLint, PostCSS, PWA, Unit Testing & End-to-end Testing.;
+
+3. [Kinvey DB](https://www.progress.com/kinvey), a NoSQL database;
 
 ### Idea
 

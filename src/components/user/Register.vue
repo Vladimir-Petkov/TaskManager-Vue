@@ -106,17 +106,26 @@ export default {
           password: this.password
         };
 
-        this.$http.post("", "user", "Basic", payload)
+        this.$http
+          .post("", "user", "Basic", payload)
           .then(this.$http.handler)
           .then(() => {
             this.$notify({
               group: "auth",
-              title: 'Register',
+              title: "Register",
               text: "Successfully Registered",
-              type: 'success'
+              type: "success"
             });
 
             this.$router.push("login");
+          })
+          .catch(() => {
+            this.$notify({
+              group: "auth",
+              text: "Username is already registered",
+              width: "200px",
+              type: "error"
+            });
           });
       }
     }

@@ -24,11 +24,8 @@
 </template>
 
 <script>
-import requester from "../../requester";
-
 export default {
   name: "Profile",
-  mixins: [requester],
   data() {
     return {
       username: sessionStorage.getItem("username") || null,
@@ -45,20 +42,20 @@ export default {
       if (!this.username) {
         return;
       } else {
-        this.get(
+        this.$http.get(
           `tasks?query={"_acl.creator":"${sessionStorage.getItem("userId")}"}`,
           "appdata",
           "Kinvey"
         )
-          .then(this.handler)
+          .then(this.$http.handler)
           .then(t => {
             this.myTasks = t;
           });
       }
     },
     tasksIworkedOn() {
-      this.get("tasks", "appdata", "Kinvey")
-        .then(this.handler)
+      this.$http.get("tasks", "appdata", "Kinvey")
+        .then(this.$http.handler)
         .then(t => {
           t.forEach(t => {
             for (const name of t.pplWorkingIn) {

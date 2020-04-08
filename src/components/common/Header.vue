@@ -31,10 +31,8 @@
 </template>
  
 <script>
-import requester from "../../requester";
 
 export default {
-  mixins: [requester],
   name: "Header",
   data() {
     return {
@@ -45,8 +43,8 @@ export default {
   },
   methods: {
     logout() {
-      this.post("_logout", "user", "Kinvey")
-        .then(this.handler)
+      this.$http.post("_logout", "user", "Kinvey")
+        .then(this.$http.handler)
         .then(() => {
           sessionStorage.clear();
 

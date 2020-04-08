@@ -53,11 +53,10 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
-import requester from "../../requester";
 
 export default {
   name: "CreateTask",
-  mixins: [validationMixin, requester],
+  mixins: [validationMixin],
   data() {
     return {
       title: "",
@@ -93,8 +92,8 @@ export default {
           pplWorkingIn: []
         };
 
-        this.post("tasks", "appdata", "Kinvey", payload)
-          .then(this.handler)
+        this.$http.post("tasks", "appdata", "Kinvey", payload)
+          .then(this.$http.handler)
           .then(() => {
             this.$notify({
               group: "app",

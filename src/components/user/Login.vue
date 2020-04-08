@@ -51,11 +51,10 @@
 import { validationMixin } from "vuelidate";
 import { required, minLength,
   maxLength } from "vuelidate/lib/validators";
-import requester from "../../requester";
 
 export default {
   name: "Login",
-  mixins: [validationMixin, requester],
+  mixins: [validationMixin],
   data() {
     return {
       username: "",
@@ -86,8 +85,8 @@ export default {
           password: this.password
         };
 
-        this.post("login", "user", "Basic", payload)
-          .then(this.handler)
+        this.$http.post("login", "user", "Basic", payload)
+          .then(this.$http.handler)
           .then(data => {
             sessionStorage.setItem("username", data.username);
             sessionStorage.setItem("authtoken", data._kmd.authtoken);

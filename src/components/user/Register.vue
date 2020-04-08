@@ -68,11 +68,10 @@ import {
   minLength,
   maxLength
 } from "vuelidate/lib/validators";
-import requester from "../../requester";
 
 export default {
   name: "Register",
-  mixins: [validationMixin, requester],
+  mixins: [validationMixin],
   data() {
     return {
       username: "",
@@ -107,8 +106,8 @@ export default {
           password: this.password
         };
 
-        this.post("", "user", "Basic", payload)
-          .then(this.handler)
+        this.$http.post("", "user", "Basic", payload)
+          .then(this.$http.handler)
           .then(() => {
             this.$notify({
               group: "auth",

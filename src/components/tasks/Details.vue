@@ -2,9 +2,9 @@
   <div>
     <h1>Details Task</h1>
     <div class="task">
-      <h2>Task Tittle: {{ tasks.title }}</h2>
-      <p>Task Description: {{ tasks.description}}</p>
-      <p>Task Colum: {{ tasks.taskColum }}</p>
+      <h2>Tittle: {{ tasks.title }}</h2>
+      <p>Description: {{ tasks.description}}</p>
+      <p>Colum: {{ tasks.taskColum }}</p>
       <h2>People working in</h2>
       <ul class="pplIn" v-for="p in tasks.pplWorkingIn" :key="p._id">
         <li>
@@ -30,11 +30,9 @@
 </template>
 
 <script>
-import requester from "../../requester";
 
 export default {
   name: "Details",
-  mixins: [requester],
   data() {
     return {
       tasks: [],
@@ -50,8 +48,8 @@ export default {
   },
   methods: {
     fetchData() {
-      this.get(`tasks/${this.id}`, "appdata", "Kinvey")
-        .then(this.handler)
+      this.$http.get(`tasks/${this.id}`, "appdata", "Kinvey")
+        .then(this.$http.handler)
         .then(d => {
           this.tasks = d;
           this.creator = d._acl.creator;
@@ -70,8 +68,8 @@ export default {
 
       this.tasks.pplWorkingIn.push(username);
 
-      this.put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
-        .then(this.handler)
+      this.$http.put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
+        .then(this.$http.handler)
         .then(d => {
           this.tasks = d;
 
@@ -91,8 +89,8 @@ export default {
       let index = this.tasks.pplWorkingIn.indexOf(username);
       this.tasks.pplWorkingIn.splice(index, 1);
 
-      this.put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
-        .then(this.handler)
+      this.$http.put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
+        .then(this.$http.handler)
         .then(d => {
           this.tasks = d;
 

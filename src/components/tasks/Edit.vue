@@ -52,11 +52,10 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
-import requester from "../../requester";
 
 export default {
   name: "EditTask",
-  mixins: [validationMixin, requester],
+  mixins: [validationMixin],
   data() {
     return {
       title: "",
@@ -87,8 +86,8 @@ export default {
     fetchData() {
       const id = this.$route.params._id;
 
-      this.get(`tasks/${id}`, "appdata", "Kinvey")
-        .then(this.handler)
+      this.$http.get(`tasks/${id}`, "appdata", "Kinvey")
+        .then(this.$http.handler)
         .then(editT => {
           this.title = editT.title;
           this.description = editT.description;
@@ -110,8 +109,8 @@ export default {
           pplWorkingIn: this.pplWorkingIn
         };
 
-        this.put(`tasks/${id}`, "appdata", "Kinvey", payload)
-          .then(this.handler)
+        this.$http.put(`tasks/${id}`, "appdata", "Kinvey", payload)
+          .then(this.$http.handler)
           .then(() => {
             this.$notify({
               group: "app",

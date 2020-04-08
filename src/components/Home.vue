@@ -61,11 +61,9 @@
 </template>
 
 <script>
-import requester from "../requester.js";
 import singleTask from "./tasks/SingleTask.vue";
 
 export default {
-  mixins: [requester],
   name: "Home",
   components: {
     singleTask
@@ -99,8 +97,8 @@ export default {
       if (!this.loggedIn) {
         return;
       } else {
-        this.get("tasks", "appdata", "Kinvey")
-          .then(this.handler)
+        this.$http.get("tasks", "appdata", "Kinvey")
+          .then(this.$http.handler)
           .then(d => {
             this.tasks = d;
           });

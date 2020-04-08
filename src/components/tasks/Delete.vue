@@ -20,11 +20,9 @@
 </template>
 
 <script>
-import requester from "../../requester";
 
 export default {
   name: "DeleteTask",
-  mixins: [requester],
   data() {
     return {
       title: "",
@@ -39,8 +37,8 @@ export default {
     fetchData() {
       const id = this.$route.params._id;
 
-      this.get(`tasks/${id}`, "appdata", "Kinvey")
-        .then(this.handler)
+      this.$http.get(`tasks/${id}`, "appdata", "Kinvey")
+        .then(this.$http.handler)
         .then(del => {
           this.title = del.title;
           this.description = del.description;
@@ -50,8 +48,8 @@ export default {
     deleteTask() {
       const id = this.$route.params._id;
 
-      this.del(`tasks/${id}`, "appdata", "Kinvey")
-        .then(this.handler)
+      this.$http.del(`tasks/${id}`, "appdata", "Kinvey")
+        .then(this.$http.handler)
         .then(() => {
           this.$notify({
             group: "app",

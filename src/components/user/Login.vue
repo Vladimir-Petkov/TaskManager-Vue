@@ -49,8 +49,7 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required, minLength,
-  maxLength } from "vuelidate/lib/validators";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 export default {
   name: "Login",
@@ -85,7 +84,8 @@ export default {
           password: this.password
         };
 
-        this.$http.post("login", "user", "Basic", payload)
+        this.$http
+          .post("login", "user", "Basic", payload)
           .then(this.$http.handler)
           .then(data => {
             sessionStorage.setItem("username", data.username);
@@ -100,6 +100,11 @@ export default {
             });
 
             this.$router.push("/");
+          })
+          .catch(() => {
+            this.$notify({
+                group: 'auth', text: 'Wrong username or password, please try again later', width: '200px', type: 'error'
+            });
           });
       }
     }

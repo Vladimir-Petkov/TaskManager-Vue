@@ -61,7 +61,8 @@ export default {
       title: "",
       description: "",
       taskColum: "",
-      pplWorkingIn: []
+      pplWorkingIn: [],
+      id: this.$route.params._id
     };
   },
   validations: {
@@ -84,9 +85,8 @@ export default {
   },
   methods: {
     fetchData() {
-      const id = this.$route.params._id;
-
-      this.$http.get(`tasks/${id}`, "appdata", "Kinvey")
+      this.$http
+        .get(`tasks/${this.id}`, "appdata", "Kinvey")
         .then(this.$http.handler)
         .then(editT => {
           this.title = editT.title;
@@ -100,8 +100,6 @@ export default {
       if (this.$v.$error) {
         return;
       } else {
-        const id = this.$route.params._id;
-
         const payload = {
           title: this.title,
           description: this.description,
@@ -109,14 +107,15 @@ export default {
           pplWorkingIn: this.pplWorkingIn
         };
 
-        this.$http.put(`tasks/${id}`, "appdata", "Kinvey", payload)
+        this.$http
+          .put(`tasks/${this.id}`, "appdata", "Kinvey", payload)
           .then(this.$http.handler)
           .then(() => {
             this.$notify({
               group: "app",
-              title: 'Edit Task',
+              title: "Edit Task",
               text: `Successfully Edit Task with Title: ${this.title}`,
-              type: 'success',
+              type: "success",
               width: "500%"
             });
 

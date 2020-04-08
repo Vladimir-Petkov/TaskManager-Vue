@@ -31,9 +31,7 @@ const requester = {
     handler(response) {
 
         if (response.status >= 400) {
-            this.$notify({
-                group: 'auth', text: 'Wrong username or password, please try again later', width: '200px', type: 'error'
-            });
+            throw new Error(`Something went wrong. Error: ${response.statusText}`);
         }
 
         if (response.status !== 204) {

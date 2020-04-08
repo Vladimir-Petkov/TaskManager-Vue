@@ -12,7 +12,6 @@ Vue.use(Notifications);
 Vue.config.productionTip = false;
 Vue.prototype.$http = requester;
 
-
 new Vue({
   render: h => h(App),
   router

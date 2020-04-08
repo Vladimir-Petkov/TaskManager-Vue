@@ -20,14 +20,14 @@
 </template>
 
 <script>
-
 export default {
   name: "DeleteTask",
   data() {
     return {
       title: "",
       description: "",
-      taskColum: ""
+      taskColum: "",
+      id: this.$route.params._id
     };
   },
   created() {
@@ -35,9 +35,8 @@ export default {
   },
   methods: {
     fetchData() {
-      const id = this.$route.params._id;
-
-      this.$http.get(`tasks/${id}`, "appdata", "Kinvey")
+      this.$http
+        .get(`tasks/${this.id}`, "appdata", "Kinvey")
         .then(this.$http.handler)
         .then(del => {
           this.title = del.title;
@@ -46,14 +45,13 @@ export default {
         });
     },
     deleteTask() {
-      const id = this.$route.params._id;
-
-      this.$http.del(`tasks/${id}`, "appdata", "Kinvey")
+      this.$http
+        .del(`tasks/${this.id}`, "appdata", "Kinvey")
         .then(this.$http.handler)
         .then(() => {
           this.$notify({
             group: "app",
-            title: 'Delete Task',
+            title: "Delete Task",
             text: `Successfully Delete Task with Title: ${this.title}`,
             type: "success"
           });

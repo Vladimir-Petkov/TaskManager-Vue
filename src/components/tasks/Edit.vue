@@ -99,7 +99,6 @@ export default {
             group: "app",
             title: "Edit Task",
             text: `Task with ID: ${this.id} not found.`,
-            width: "200px",
             type: "error"
           });
           this.$router.push("/");
@@ -126,7 +125,6 @@ export default {
               title: "Edit Task",
               text: `Successfully Edit Task with Title: ${this.title}`,
               type: "success",
-              width: "500%"
             });
 
             this.$router.push("/");

@@ -2,7 +2,7 @@
   <div>
     <h1>Details Task</h1>
     <div class="task">
-      <h2>Tittle: {{ tasks.title }}</h2>
+      <h2>Title: {{ tasks.title }}</h2>
       <p>Description: {{ tasks.description}}</p>
       <p>Colum: {{ tasks.taskColum }}</p>
       <h2>People working in</h2>
@@ -67,7 +67,6 @@ export default {
             group: "app",
             title: "Details Task",
             text: `Task with ID: ${this.id} not found.`,
-            width: "200px",
             type: "error"
           });
           this.$router.push("/");

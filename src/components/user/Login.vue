@@ -103,7 +103,7 @@ export default {
           })
           .catch(() => {
             this.$notify({
-                group: 'auth', title: "Login", text: 'Wrong username or password, please try again later', width: '200px', type: 'error'
+                group: 'auth', title: "Login", text: 'Wrong username or password, please try again later', type: 'error'
             });
           });
       }

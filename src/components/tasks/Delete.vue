@@ -48,7 +48,6 @@ export default {
             group: "app",
             title: "Delete Task",
             text: `Task with ID: ${this.id} not found.`,
-            width: "200px",
             type: "error"
           });
           this.$router.push("/");

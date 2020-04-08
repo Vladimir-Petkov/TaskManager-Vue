@@ -23,6 +23,7 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+## The application
 
 ## The technologies
 
@@ -31,8 +32,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 2. [Vue CLI](https://cli.vuejs.org/), Out-of-the-box support for Babel, TypeScript, ESLint, PostCSS, PWA, Unit Testing & End-to-end Testing.;
 
 3. [Kinvey DB](https://www.progress.com/kinvey), a NoSQL database;
-
-## The application
 
 ### Idea
 

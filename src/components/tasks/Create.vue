@@ -98,7 +98,7 @@ export default {
             this.$notify({
               group: "app",
               title: 'Create Task',
-              text: "Successfully Create Task",
+              text: `Successfully Create Task with Title: ${this.title}`,
               type: 'success'
             });
 

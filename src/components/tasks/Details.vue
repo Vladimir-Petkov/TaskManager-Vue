@@ -30,7 +30,6 @@
 </template>
 
 <script>
-
 export default {
   name: "Details",
   data() {
@@ -48,7 +47,8 @@ export default {
   },
   methods: {
     fetchData() {
-      this.$http.get(`tasks/${this.id}`, "appdata", "Kinvey")
+      this.$http
+        .get(`tasks/${this.id}`, "appdata", "Kinvey")
         .then(this.$http.handler)
         .then(d => {
           this.tasks = d;
@@ -61,6 +61,16 @@ export default {
               }
             }
           }
+        })
+        .catch(() => {
+          this.$notify({
+            group: "app",
+            title: "Details Task",
+            text: `Task with ID: ${this.id} not found.`,
+            width: "200px",
+            type: "error"
+          });
+          this.$router.push("/");
         });
     },
     workingIn() {
@@ -68,7 +78,8 @@ export default {
 
       this.tasks.pplWorkingIn.push(username);
 
-      this.$http.put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
+      this.$http
+        .put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
         .then(this.$http.handler)
         .then(d => {
           this.tasks = d;
@@ -78,7 +89,7 @@ export default {
           this.$notify({
             group: "app",
             title: "Working In Task",
-            text: "Successfully Working In Task",
+            text: `Successfully Working In Task with Title: ${this.tasks.title}`,
             type: "success"
           });
         });
@@ -89,7 +100,8 @@ export default {
       let index = this.tasks.pplWorkingIn.indexOf(username);
       this.tasks.pplWorkingIn.splice(index, 1);
 
-      this.$http.put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
+      this.$http
+        .put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
         .then(this.$http.handler)
         .then(d => {
           this.tasks = d;
@@ -99,7 +111,7 @@ export default {
           this.$notify({
             group: "app",
             title: "Working Out Task",
-            text: "Successfully Working Out Task",
+            text: `Successfully Working Out Task with Title: ${this.tasks.title}`,
             type: "success"
           });
         });

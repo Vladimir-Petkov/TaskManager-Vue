@@ -93,6 +93,16 @@ export default {
           this.description = editT.description;
           this.taskColum = editT.taskColum;
           this.pplWorkingIn = editT.pplWorkingIn;
+        })
+        .catch(() => {
+          this.$notify({
+            group: "app",
+            title: "Edit Task",
+            text: `Task with ID: ${this.id} not found.`,
+            width: "200px",
+            type: "error"
+          });
+          this.$router.push("/");
         });
     },
     editTask() {

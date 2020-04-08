@@ -122,6 +122,7 @@ export default {
           .catch(() => {
             this.$notify({
               group: "auth",
+              title: "Register",
               text: "Username is already registered",
               width: "200px",
               type: "error"

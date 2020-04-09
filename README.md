@@ -48,7 +48,7 @@ The app is fully responsible built with Vuetify and a website is https://vuetify
 
 * GET
 
-    * `/profile/:id`
+    * `/profile`
 
 * POST
 

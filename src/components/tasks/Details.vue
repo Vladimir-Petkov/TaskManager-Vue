@@ -35,8 +35,8 @@ export default {
   data() {
     return {
       tasks: [],
-      userId: sessionStorage.getItem("userId"),
-      username: sessionStorage.getItem("username"),
+      userId: sessionStorage.getItem("userId") || null,
+      username: sessionStorage.getItem("username") || null,
       creator: "",
       worIn: false,
       id: this.$route.params._id
@@ -73,9 +73,7 @@ export default {
         });
     },
     workingIn() {
-      const username = sessionStorage.getItem("username");
-
-      this.tasks.pplWorkingIn.push(username);
+      this.tasks.pplWorkingIn.push(this.username);
 
       this.$http
         .put(`tasks/${this.id}`, "appdata", "Kinvey", this.tasks)
@@ -94,9 +92,7 @@ export default {
         });
     },
     workingOut() {
-      const username = sessionStorage.getItem("username");
-
-      let index = this.tasks.pplWorkingIn.indexOf(username);
+      let index = this.tasks.pplWorkingIn.indexOf(this.username);
       this.tasks.pplWorkingIn.splice(index, 1);
 
       this.$http

@@ -1,5 +1,5 @@
 <template>
-  <div id="loginForm">
+  <div>
     <h1>Login Form</h1>
     <form @submit.prevent="login">
       <label>Username</label>
@@ -57,8 +57,7 @@ export default {
   data() {
     return {
       username: "",
-      password: "",
-      loggedIn: sessionStorage.getItem("authtoken")
+      password: ""
     };
   },
   validations: {
@@ -105,6 +104,7 @@ export default {
             this.$notify({
                 group: 'auth', title: "Login", text: 'Wrong username or password, please try again later', type: 'error'
             });
+            this.password = ''
           });
       }
     }

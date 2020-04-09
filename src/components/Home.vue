@@ -71,7 +71,7 @@ export default {
   data() {
     return {
       tasks: [],
-      loggedIn: false
+      loggedIn: sessionStorage.getItem("authtoken") || null
     };
   },
   computed: {
@@ -90,26 +90,18 @@ export default {
   },
   created() {
     this.fetchData();
-    this.loggedIn = sessionStorage.getItem("authtoken");
   },
   methods: {
     fetchData() {
       if (!this.loggedIn) {
         return;
       } else {
-        this.$http.get("tasks", "appdata", "Kinvey")
+        this.$http
+          .get("tasks", "appdata", "Kinvey")
           .then(this.$http.handler)
           .then(d => {
             this.tasks = d;
           });
-      }
-    }
-  },
-  watch: {
-    $route: {
-      immediate: true,
-      handler() {
-        this.loggedIn = sessionStorage.getItem("authtoken");
       }
     }
   }

@@ -23,15 +23,14 @@
       </template>
 
       <template v-else>
-        <v-btn outlined to="/login" >Login</v-btn>
-        <v-btn outlined to="/register" >Register</v-btn>
+        <v-btn outlined to="/login">Login</v-btn>
+        <v-btn outlined to="/register">Register</v-btn>
       </template>
     </v-toolbar>
   </div>
 </template>
  
 <script>
-
 export default {
   name: "Header",
   data() {
@@ -43,7 +42,8 @@ export default {
   },
   methods: {
     logout() {
-      this.$http.post("_logout", "user", "Kinvey")
+      this.$http
+        .post("_logout", "user", "Kinvey")
         .then(this.$http.handler)
         .then(() => {
           sessionStorage.clear();
@@ -58,11 +58,6 @@ export default {
           this.$router.push("/login");
         });
     }
-  },
-  created() {
-    this.loggedIn = sessionStorage.getItem("authtoken");
-    this.username = sessionStorage.getItem("username");
-    this.userId = sessionStorage.getItem("userId");
   },
   watch: {
     $route: {

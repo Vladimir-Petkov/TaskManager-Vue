@@ -14,9 +14,6 @@ import Footer from "./components/common/Footer.vue";
 
 export default {
   name: "App",
-  data: function() {
-    return {};
-  },
   components: {
     Header,
     Footer

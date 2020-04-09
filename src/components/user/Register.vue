@@ -127,6 +127,9 @@ export default {
               width: "200px",
               type: "error"
             });
+            
+            this.password = '',
+            this.rePassword = ''
           });
       }
     }

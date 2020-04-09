@@ -22,7 +22,7 @@ const router = new VueRouter({
         { path: '/edit/:_id', name: 'Edit', component: Edit },
         { path: '/details/:_id', name: 'Details', component: Details },
         { path: '/delete/:_id', name: 'Delete', component: Delete },
-        { path: '/profile/:id', name: 'Profile', component: Profile },
+        { path: '/profile', name: 'Profile', component: Profile },
         { path: '*', component: NotFound },
     ]
 });

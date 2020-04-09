@@ -1,12 +1,11 @@
 <template>
   <div>
-    <h2 style="text-align:center">User Profile Card</h2>
-
+    <h2 style="text-align:center">User Profile</h2>
     <div class="card">
       <img
         src="https://banner2.cleanpng.com/20180920/efk/kisspng-user-logo-information-service-design-5ba34f88a0c3a6.5907352915374293846585.jpg"
         alt="John"
-        style="width:80%"
+        style="width:60%"
       />
       <h1>Username: {{ username }}</h1>
       <p>My Created Tasks: {{ myTasks.length || 0 }}</p>
@@ -74,7 +73,7 @@ export default {
 .card {
   max-width: 500px;
   margin: auto;
-  padding: 70px;
+  padding: 20px;
   text-align: center;
 }
 
@@ -107,7 +106,7 @@ a:hover {
   opacity: 0.7;
 }
 
-h1 {
+h1, h2 {
   color: white;
   margin-bottom: 5px;
 }

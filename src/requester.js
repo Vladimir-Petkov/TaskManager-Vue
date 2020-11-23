@@ -1,7 +1,7 @@
 const baseUrl = "https://baas.kinvey.com/";
 
-const appKey = "kid_SkO6PdsUU";
-const appSecret = "e745c3a54d1b400ca5d37d33bf930b85";
+const appKey = "kid_r1_LPPP6I";
+const appSecret = "500d0a41c3464b568b7948c9940ed6d7";
 
 const requester = {
     get(endpoint, module, type) {

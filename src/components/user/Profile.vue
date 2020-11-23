@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h2 style="text-align:center">User Profile</h2>
+    <h2 style="text-align: center">User Profile</h2>
     <div class="card">
       <img
         src="https://banner2.cleanpng.com/20180920/efk/kisspng-user-logo-information-service-design-5ba34f88a0c3a6.5907352915374293846585.jpg"
         alt="John"
-        style="width:60%"
+        style="width: 60%"
       />
       <h1>Username: {{ username }}</h1>
       <p>My Created Tasks: {{ myTasks.length || 0 }}</p>
@@ -27,9 +27,9 @@ export default {
   name: "Profile",
   data() {
     return {
-      username: sessionStorage.getItem("username") || null,
+      username: localStorage.getItem("username") || null,
       myTasks: [],
-      workingOn: []
+      workingOn: [],
     };
   },
   created() {
@@ -41,22 +41,25 @@ export default {
       if (!this.username) {
         return;
       } else {
-        this.$http.get(
-          `tasks?query={"_acl.creator":"${sessionStorage.getItem("userId")}"}`,
-          "appdata",
-          "Kinvey"
-        )
-          .then(this.$http.handler)
-          .then(t => {
-            this.myTasks = t;
+        const myId = localStorage.getItem("userId");
+
+        fetch(`http://localhost:9999/api/task/getAll`)
+          .then((res) => res.json())
+          .then((allTasks) => {
+            for (const task of allTasks) {
+              if (task.creatorId == myId) {
+                this.myTasks.push(task.title);
+              }
+            }
           });
       }
     },
     tasksIworkedOn() {
-      this.$http.get("tasks", "appdata", "Kinvey")
-        .then(this.$http.handler)
-        .then(t => {
-          t.forEach(t => {
+      this.$http;
+      fetch(`http://localhost:9999/api/task/getAll`)
+        .then((res) => res.json())
+        .then((t) => {
+          t.forEach((t) => {
             for (const name of t.pplWorkingIn) {
               if (name == this.username) {
                 this.workingOn.push(t.title);
@@ -64,8 +67,8 @@ export default {
             }
           });
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -106,7 +109,8 @@ a:hover {
   opacity: 0.7;
 }
 
-h1, h2 {
+h1,
+h2 {
   color: white;
   margin-bottom: 5px;
 }

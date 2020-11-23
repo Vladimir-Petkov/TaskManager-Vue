@@ -5,7 +5,12 @@
       <label>Title</label>
       <input type="text" name="title" v-model="title" disabled />
       <label>Description</label>
-      <textarea type="text" name="description" v-model="description" disabled></textarea>
+      <textarea
+        type="text"
+        name="description"
+        v-model="description"
+        disabled
+      ></textarea>
       <label for="tasks">Choosed task colum:</label>
       <select name="taskColum" v-model="taskColum" disabled>
         <option value="open">Open</option>
@@ -27,7 +32,7 @@ export default {
       title: "",
       description: "",
       taskColum: "",
-      id: this.$route.params._id
+      id: this.$route.params._id,
     };
   },
   created() {
@@ -35,40 +40,55 @@ export default {
   },
   methods: {
     fetchData() {
-      this.$http
-        .get(`tasks/${this.id}`, "appdata", "Kinvey")
-        .then(this.$http.handler)
-        .then(del => {
-          this.title = del.title;
-          this.description = del.description;
-          this.taskColum = del.taskColum;
+      let token = localStorage.getItem("authtoken");
+
+      fetch(`http://localhost:9999/api/task/getOne/${this.id}`, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: token,
+        },
+      })
+        .then((singleTask) => singleTask.json())
+        .then((editT) => {
+          this.title = editT.title;
+          this.description = editT.description;
+          this.taskColum = editT.taskColum;
+          this.pplWorkingIn = editT.pplWorkingIn;
         })
         .catch(() => {
           this.$notify({
             group: "app",
             title: "Delete Task",
             text: `Task with ID: ${this.id} not found.`,
-            type: "error"
+            type: "error",
           });
           this.$router.push("/");
         });
     },
     deleteTask() {
-      this.$http
-        .del(`tasks/${this.id}`, "appdata", "Kinvey")
-        .then(this.$http.handler)
+      let token = localStorage.getItem("authtoken");
+
+      fetch(`http://localhost:9999/api/task/delete/${this.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: token,
+        },
+      })
+        .then((singleTask) => singleTask.json())
         .then(() => {
           this.$notify({
             group: "app",
             title: "Delete Task",
             text: `Successfully Delete Task with Title: ${this.title}`,
-            type: "success"
+            type: "success",
           });
 
           this.$router.push("/");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -12,14 +12,12 @@
       />
       <template v-if="$v.username.$error">
         <p v-if="!$v.username.required" class="error">Username is required</p>
-        <p
-          v-else-if="!$v.username.minLength"
-          class="error"
-        >Usernames must be at least 4 characters long</p>
-        <p
-          v-else-if="!$v.username.maxLength"
-          class="error"
-        >Username must be between 4 and 10 characters long</p>
+        <p v-else-if="!$v.username.minLength" class="error">
+          Usernames must be at least 4 characters long
+        </p>
+        <p v-else-if="!$v.username.maxLength" class="error">
+          Username must be between 4 and 10 characters long
+        </p>
       </template>
 
       <label>Password</label>
@@ -32,14 +30,12 @@
       />
       <template v-if="$v.password.$error">
         <p v-if="!$v.password.required" class="error">Password is required</p>
-        <p
-          v-else-if="!$v.password.minLength"
-          class="error"
-        >Password must be at least 5 characters long</p>
-        <p
-          v-else-if="!$v.password.maxLength"
-          class="error"
-        >Password must be between 5 and 12 characters long</p>
+        <p v-else-if="!$v.password.minLength" class="error">
+          Password must be at least 5 characters long
+        </p>
+        <p v-else-if="!$v.password.maxLength" class="error">
+          Password must be between 5 and 12 characters long
+        </p>
       </template>
 
       <input type="submit" value="Login" />
@@ -57,20 +53,20 @@ export default {
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
     };
   },
   validations: {
     username: {
       required,
       minLength: minLength(4),
-      maxLength: maxLength(10)
+      maxLength: maxLength(10),
     },
     password: {
       required,
       minLength: minLength(5),
-      maxLength: maxLength(12)
-    }
+      maxLength: maxLength(12),
+    },
   },
   methods: {
     login() {
@@ -80,35 +76,49 @@ export default {
       } else {
         const payload = {
           username: this.username,
-          password: this.password
+          password: this.password,
         };
 
-        this.$http
-          .post("login", "user", "Basic", payload)
-          .then(this.$http.handler)
-          .then(data => {
-            sessionStorage.setItem("username", data.username);
-            sessionStorage.setItem("authtoken", data._kmd.authtoken);
-            sessionStorage.setItem("userId", data._id);
+        fetch("http://localhost:9999/api/user/login", {
+          body: JSON.stringify(payload),
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+          .then((data) => {
+            const authToken = data.headers.get("Authorization");
+            document.cookie = `x-auth-token=${authToken}`;
+            localStorage.setItem("authtoken", authToken);
+            return data.json();
+          })
+          .then((data) => {
+            console.log(data);
+
+            localStorage.setItem("username", data.user.username);
+            localStorage.setItem("userId", data.user._id);
 
             this.$notify({
               group: "auth",
               title: "Login",
               text: "Successfully Logged In",
-              type: "success"
+              type: "success",
             });
 
             this.$router.push("/");
           })
           .catch(() => {
             this.$notify({
-                group: 'auth', title: "Login", text: 'Wrong username or password, please try again later', type: 'error'
+              group: "auth",
+              title: "Login",
+              text: "Wrong username or password, please try again later",
+              type: "error",
             });
-            this.password = ''
+            this.password = "";
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -4,7 +4,7 @@
       <img
         src="https://i.pinimg.com/originals/46/cd/20/46cd20a33efe24abce136ee09cea122a.png"
         alt
-        style="width:2em; height:2em;"
+        style="width: 2em; height: 2em"
       />
 
       <v-toolbar-title>
@@ -17,8 +17,9 @@
         <v-btn
           outlined
           tag="a"
-          :to="{ name: 'Profile', params: { id: userId}}"
-        >Welcome, {{ username }}</v-btn>
+          :to="{ name: 'Profile', params: { id: userId } }"
+          >Welcome, {{ username }}</v-btn
+        >
         <v-btn outlined tag="a" @click="logout">Logout</v-btn>
       </template>
 
@@ -37,38 +38,34 @@ export default {
     return {
       loggedIn: false,
       username: "",
-      userId: ""
+      userId: "",
     };
   },
   methods: {
     logout() {
-      this.$http
-        .post("_logout", "user", "Kinvey")
-        .then(this.$http.handler)
-        .then(() => {
-          sessionStorage.clear();
+      document.cookie = "x-auth-token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+      localStorage.clear();
 
-          this.$notify({
-            group: "auth",
-            title: "Logout",
-            text: "Successfully Logout",
-            type: "success"
-          });
+      this.$notify({
+        group: "auth",
+        title: "Logout",
+        text: "Successfully Logout",
+        type: "success",
+      });
 
-          this.$router.push("/login");
-        });
-    }
+      this.$router.push("/login");
+    },
   },
   watch: {
     $route: {
       immediate: true,
       handler() {
-        this.loggedIn = sessionStorage.getItem("authtoken");
-        this.username = sessionStorage.getItem("username");
-        this.userId = sessionStorage.getItem("userId");
-      }
-    }
-  }
+        this.loggedIn = localStorage.getItem("authtoken");
+        this.username = localStorage.getItem("username");
+        this.userId = localStorage.getItem("userId");
+      },
+    },
+  },
 };
 </script>
  

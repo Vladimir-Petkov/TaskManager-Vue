@@ -32,7 +32,7 @@ const openRoutes = ['Login', 'Register', 'Home'];
 router.beforeEach((to, from, next) => {
     if (openRoutes.includes(to.name)) {
         next()
-    } else if (sessionStorage.getItem("authtoken")) {
+    } else if (localStorage.getItem("authtoken")) {
         next()
     } else {
         next('/login');
@@ -40,7 +40,7 @@ router.beforeEach((to, from, next) => {
 });
 
 function anonymousGuard(to, from, next) {
-    if (sessionStorage.getItem('authtoken') !== null) {
+    if (localStorage.getItem('authtoken') !== null) {
         next('/');
     } else {
         next();

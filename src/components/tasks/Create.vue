@@ -3,14 +3,21 @@
     <h1>Create Task</h1>
     <form @submit.prevent="createTask">
       <label>Title</label>
-      <input type="text" name="title" id="createImage" v-model="title" @blur="$v.title.$touch" />
+      <input
+        type="text"
+        name="title"
+        id="createImage"
+        v-model="title"
+        @blur="$v.title.$touch"
+      />
       <template v-if="$v.title.$error">
         <p v-if="!$v.title.required" class="error">Title is required</p>
-        <p v-else-if="!$v.title.minLength" class="error">Title must be at least 5 characters long</p>
-        <p
-          v-else-if="!$v.title.maxLength"
-          class="error"
-        >Title must be between 5 and 20 characters long</p>
+        <p v-else-if="!$v.title.minLength" class="error">
+          Title must be at least 5 characters long
+        </p>
+        <p v-else-if="!$v.title.maxLength" class="error">
+          Title must be between 5 and 20 characters long
+        </p>
       </template>
 
       <label>Description</label>
@@ -22,15 +29,15 @@
         @blur="$v.description.$touch"
       ></textarea>
       <template v-if="$v.description.$error">
-        <p v-if="!$v.description.required" class="error">Description is required</p>
-        <p
-          v-else-if="!$v.description.minLength"
-          class="error"
-        >Description must be at least 10 characters long</p>
-        <p
-          v-else-if="!$v.description.maxLength"
-          class="error"
-        >Description must be between 10 and 100 characters long</p>
+        <p v-if="!$v.description.required" class="error">
+          Description is required
+        </p>
+        <p v-else-if="!$v.description.minLength" class="error">
+          Description must be at least 10 characters long
+        </p>
+        <p v-else-if="!$v.description.maxLength" class="error">
+          Description must be between 10 and 100 characters long
+        </p>
       </template>
 
       <label for="tasks">Choose a task colum:</label>
@@ -42,7 +49,9 @@
         <option value="deploy">Deploy</option>
       </select>
       <template v-if="$v.taskColum.$error">
-        <p v-if="!$v.taskColum.required" class="error">Task Colum is required</p>
+        <p v-if="!$v.taskColum.required" class="error">
+          Task Colum is required
+        </p>
       </template>
       <br />
       <input type="submit" value="Create" />
@@ -68,16 +77,16 @@ export default {
     title: {
       required,
       minLength: minLength(5),
-      maxLength: maxLength(20)
+      maxLength: maxLength(20),
     },
     description: {
       required,
       minLength: minLength(10),
-      maxLength: maxLength(100)
+      maxLength: maxLength(100),
     },
     taskColum: {
-      required
-    }
+      required,
+    },
   },
   methods: {
     createTask() {
@@ -89,24 +98,33 @@ export default {
           title: this.title,
           description: this.description,
           taskColum: this.taskColum,
-          pplWorkingIn: []
+          pplWorkingIn: [],
         };
 
-        this.$http.post("tasks", "appdata", "Kinvey", payload)
-          .then(this.$http.handler)
+        let token = localStorage.getItem("authtoken");
+
+        fetch(`http://localhost:9999/api/task/create`, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify(payload),
+        })
+          .then((res) => res.json())
           .then(() => {
             this.$notify({
               group: "app",
-              title: 'Create Task',
+              title: "Create Task",
               text: `Successfully Create Task with Title: ${this.title}`,
-              type: 'success'
+              type: "success",
             });
 
             this.$router.push("/");
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

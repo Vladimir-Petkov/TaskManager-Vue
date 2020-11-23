@@ -71,7 +71,7 @@ export default {
   data() {
     return {
       tasks: [],
-      loggedIn: sessionStorage.getItem("authtoken") || null
+      loggedIn: localStorage.getItem("authtoken") || null
     };
   },
   computed: {
@@ -96,11 +96,10 @@ export default {
       if (!this.loggedIn) {
         return;
       } else {
-        this.$http
-          .get("tasks", "appdata", "Kinvey")
-          .then(this.$http.handler)
-          .then(d => {
-            this.tasks = d;
+        fetch(`http://localhost:9999/api/task/getAll`)
+          .then(res => res.json())
+          .then(allTasks => {
+            this.tasks = allTasks;
           });
       }
     }

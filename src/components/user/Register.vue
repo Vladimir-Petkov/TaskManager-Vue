@@ -12,14 +12,12 @@
       />
       <template v-if="$v.username.$error">
         <p v-if="!$v.username.required" class="error">Username is required</p>
-        <p
-          v-else-if="!$v.username.minLength"
-          class="error"
-        >Usernames must be at least 4 characters long</p>
-        <p
-          v-else-if="!$v.username.maxLength"
-          class="error"
-        >Username must be between 4 and 10 characters long</p>
+        <p v-else-if="!$v.username.minLength" class="error">
+          Usernames must be at least 4 characters long
+        </p>
+        <p v-else-if="!$v.username.maxLength" class="error">
+          Username must be between 4 and 10 characters long
+        </p>
       </template>
 
       <label>Password</label>
@@ -32,14 +30,12 @@
       />
       <template v-if="$v.password.$error">
         <p v-if="!$v.password.required" class="error">Password is required</p>
-        <p
-          v-else-if="!$v.password.minLength"
-          class="error"
-        >Password must be at least 5 characters long</p>
-        <p
-          v-else-if="!$v.password.maxLength"
-          class="error"
-        >Password must be between 5 and 12 characters long</p>
+        <p v-else-if="!$v.password.minLength" class="error">
+          Password must be at least 5 characters long
+        </p>
+        <p v-else-if="!$v.password.maxLength" class="error">
+          Password must be between 5 and 12 characters long
+        </p>
       </template>
 
       <label>Repeat Password</label>
@@ -51,8 +47,12 @@
         @blur="$v.rePassword.$touch"
       />
       <template v-if="$v.rePassword.$error">
-        <p v-if="!$v.rePassword.required" class="error">Repeat Password is required</p>
-        <p v-else-if="!$v.rePassword.sameAs" class="error">Repeat Password does not match password!</p>
+        <p v-if="!$v.rePassword.required" class="error">
+          Repeat Password is required
+        </p>
+        <p v-else-if="!$v.rePassword.sameAs" class="error">
+          Repeat Password does not match password!
+        </p>
       </template>
 
       <input type="submit" value="Register" />
@@ -66,7 +66,7 @@ import {
   required,
   sameAs,
   minLength,
-  maxLength
+  maxLength,
 } from "vuelidate/lib/validators";
 
 export default {
@@ -76,24 +76,24 @@ export default {
     return {
       username: "",
       password: "",
-      rePassword: ""
+      rePassword: "",
     };
   },
   validations: {
     username: {
       required,
       minLength: minLength(4),
-      maxLength: maxLength(10)
+      maxLength: maxLength(10),
     },
     password: {
       required,
       minLength: minLength(5),
-      maxLength: maxLength(12)
+      maxLength: maxLength(12),
     },
     rePassword: {
       required,
-      sameAs: sameAs("password")
-    }
+      sameAs: sameAs("password"),
+    },
   },
   methods: {
     register() {
@@ -103,18 +103,22 @@ export default {
       } else {
         const payload = {
           username: this.username,
-          password: this.password
+          password: this.password,
         };
 
-        this.$http
-          .post("", "user", "Basic", payload)
-          .then(this.$http.handler)
+        fetch("http://localhost:9999/api/user/register", {
+          body: JSON.stringify(payload),
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
           .then(() => {
             this.$notify({
               group: "auth",
               title: "Register",
               text: "Successfully Registered",
-              type: "success"
+              type: "success",
             });
 
             this.$router.push("login");
@@ -125,15 +129,14 @@ export default {
               title: "Register",
               text: "Username is already registered",
               width: "200px",
-              type: "error"
+              type: "error",
             });
-            
-            this.password = '',
-            this.rePassword = ''
+
+            (this.password = ""), (this.rePassword = "");
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
